@@ -1,0 +1,28 @@
+name: Generate Pacman contribution graph
+
+on:
+  schedule:
+    - cron: "29 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Generate themed arcade graph
+        uses: abozanona/pacman-contribution-graph@7332e1de7903ab780c3692a4127a59cc13872daa # main at 2026-08-01
+        with:
+          github_user_name: vighriday
+          games: pacman
+      - name: Publish generated SVGs to output
+        uses: crazy-max/ghaction-github-pages@1ebdede6822df72b485a37eecfadbea9a70a3e7d # v4
+        with:
+          target_branch: output
+          build_dir: dist
+          keep_history: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

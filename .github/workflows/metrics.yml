@@ -1,0 +1,93 @@
+name: Generate full metrics dashboard
+
+on:
+  schedule:
+    - cron: "11 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  light:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Render light dashboard
+        uses: lowlighter/metrics@366f8b9dfe3a59656c67d5dcad9950f59c9bc96d # v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN || github.token }}
+          user: vighriday
+          template: classic
+          filename: metrics-light.svg
+          output_action: commit
+          committer_branch: output
+          committer_message: "chore: refresh light metrics dashboard"
+          base: header, activity, community, repositories, metadata
+          config_display: large
+          config_timezone: Asia/Kolkata
+          config_twemoji: yes
+          config_theme: light
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          plugin_languages: yes
+          plugin_languages_limit: 8
+          plugin_languages_sections: most-used, recently-used
+          plugin_languages_details: percentage, bytes-size
+          plugin_languages_indepth: yes
+          plugin_habits: yes
+          plugin_habits_from: 365
+          plugin_habits_charts: yes
+          plugin_achievements: yes
+          plugin_achievements_threshold: C
+          plugin_notable: yes
+          plugin_repositories: yes
+          plugin_repositories_featured: vighriday/Veris, vighriday/Pulse, vighriday/offside-june-2026
+          plugin_stargazers: yes
+          plugin_stargazers_limit: 3
+          # Optional plugins remain off until their corresponding SETUP.md values exist.
+          plugin_rss: no
+          plugin_music: no
+          plugin_chess: no
+          plugin_leetcode: no
+  dark:
+    needs: light
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Render dark dashboard
+        uses: lowlighter/metrics@366f8b9dfe3a59656c67d5dcad9950f59c9bc96d # v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN || github.token }}
+          user: vighriday
+          template: classic
+          filename: metrics-dark.svg
+          output_action: commit
+          committer_branch: output
+          committer_message: "chore: refresh dark metrics dashboard"
+          base: header, activity, community, repositories, metadata
+          config_display: large
+          config_timezone: Asia/Kolkata
+          config_twemoji: yes
+          config_theme: dark
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          plugin_languages: yes
+          plugin_languages_limit: 8
+          plugin_languages_sections: most-used, recently-used
+          plugin_languages_details: percentage, bytes-size
+          plugin_languages_indepth: yes
+          plugin_habits: yes
+          plugin_habits_from: 365
+          plugin_habits_charts: yes
+          plugin_achievements: yes
+          plugin_achievements_threshold: C
+          plugin_notable: yes
+          plugin_repositories: yes
+          plugin_repositories_featured: vighriday/Veris, vighriday/Pulse, vighriday/offside-june-2026
+          plugin_stargazers: yes
+          plugin_stargazers_limit: 3
+          plugin_rss: no
+          plugin_music: no
+          plugin_chess: no
+          plugin_leetcode: no

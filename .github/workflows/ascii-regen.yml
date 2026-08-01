@@ -1,0 +1,40 @@
+name: Regenerate ASCII portrait
+
+on:
+  push:
+    paths:
+      - "assets/portrait-source.*"
+      - "scripts/ascii_portrait.py"
+      - "requirements.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4.6.0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v5.6.0
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install portrait renderer dependencies
+        run: pip install -r requirements.txt
+      - name: Generate static, scanline, and shimmer variants
+        run: |
+          SOURCE="assets/portrait-placeholder.ppm"
+          if [ -f assets/portrait-source.jpg ]; then SOURCE="assets/portrait-source.jpg"; fi
+          if [ -f assets/portrait-source.png ]; then SOURCE="assets/portrait-source.png"; fi
+          mkdir -p dist
+          python scripts/ascii_portrait.py "$SOURCE" --output-dir dist --name ascii-portrait --ramp blocks --edge --color --animation all
+      - name: Publish generated portrait assets to output
+        uses: peaceiris/actions-gh-pages@09d8f313dcc84179c9f28dbbbe1f06f3ca174008 # v4.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: ./dist
+          keep_files: true
+          commit_message: "chore: regenerate ASCII portrait"

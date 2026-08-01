@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="220" viewBox="0 0 800 220" role="img" aria-labelledby="t d">
+<title id="t">Hriday Vig - software engineer and AI systems builder</title><desc id="d">Indigo animated fallback hero banner.</desc>
+<style>
+:root { --bg:#f9f7ff; --ink:#21174A; --muted:#675E87; --accent:#7C5CFC; }
+@media(prefers-color-scheme:dark) { :root { --bg:#0f0b1d; --ink:#EEEAFF; --muted:#BDB4DA; --accent:#A78BFA; } }
+.orb { animation: orbit 9s ease-in-out infinite alternate; } .pulse { animation:pulse 3.4s ease-in-out infinite; }
+@keyframes orbit { to { transform:translate(112px,-14px); } } @keyframes pulse { 50% { opacity:.35; transform:scale(1.18); } }
+</style><rect width="800" height="220" rx="22" fill="var(--bg)"/><g class="orb" fill="var(--accent)" opacity=".15"><circle cx="650" cy="60" r="88"/><circle cx="710" cy="135" r="46"/></g><circle class="pulse" cx="650" cy="60" r="8" fill="var(--accent)"/><text x="50" y="96" fill="var(--ink)" font-family="Arial, sans-serif" font-size="38" font-weight="700">Hriday Vig</text><text x="50" y="130" fill="var(--muted)" font-family="Arial, sans-serif" font-size="18">Software engineer · AI systems builder · cloud native</text><path d="M50 160H390" stroke="var(--accent)" stroke-width="3"/></svg>
