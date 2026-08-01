@@ -38,13 +38,13 @@
       <h3>neofetch / hriday</h3>
       <code>role</code> <b>Software Engineer & AI Systems Builder</b><br>
       <code>location</code> New Delhi, India<br>
-      <code>education</code> B.Tech CSE @ MSIT, GGSIPU (2028)<br>
+      <code>education</code> B.Tech CSE @ MSIT, GGSIPU (2024–2028) · CGPA 8.87/10<br>
       <code>uptime</code> Shipping end-to-end systems since 2025<br>
       <code>shell</code> Python · TypeScript · JavaScript · SQL<br>
-      <code>editor</code> Cloud-native delivery with GitHub Actions<br>
-      <code>focus</code> AI agents · MCP · evaluation · reliability<br>
-      <code>currently</code> Building Veris, Pulse, and Scrybe AI<br><br>
-      I build verifiable software systems: from stakeholder requirements and architecture through deployment, observability, and iteration. My current work centres on AI-agent reliability, human-in-the-loop orchestration, and decision-support products.
+      <code>cloud</code> Azure · Azure Functions · Docker · GitHub Actions<br>
+      <code>focus</code> AI agents · MCP · evaluation · reliability · observability<br>
+      <code>currently</code> Veris, Pulse, and Scrybe AI<br><br>
+      I design, develop, test, and ship software end-to-end. My work spans stakeholder requirements, full-stack web apps, REST APIs, Azure cloud deployments, and AI-native developer tooling with multi-agent systems.
     </td>
   </tr>
 </table>
@@ -53,18 +53,49 @@
   <img src="assets/signature-divider.svg" alt="Animated indigo constellation divider" width="800">
 </div>
 
-## Stack, tuned for delivery
+## Stack, aligned to the resume
 
 <div align="center">
   <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python,ts,js,sql&perline=4" alt="Languages: Python, TypeScript, JavaScript, SQL"></a><br>
   <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=react,nextjs,fastapi,flask,nodejs&perline=5" alt="Frameworks: React, Next.js, FastAPI, Flask, Node.js"></a><br>
-  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=azure,docker,githubactions,mongodb,postgres,redis&perline=6" alt="Cloud, tools, and databases: Azure, Docker, GitHub Actions, MongoDB, PostgreSQL, Redis"></a><br><br>
+  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=azure,docker,githubactions,mongodb,postgres,redis,sqlite&perline=7" alt="Cloud, tools, and databases: Azure, Docker, GitHub Actions, MongoDB, PostgreSQL, Redis, SQLite"></a><br><br>
   <img src="https://img.shields.io/badge/Model_Context_Protocol-7C5CFC?style=for-the-badge&labelColor=21174A" alt="Model Context Protocol">
   <img src="https://img.shields.io/badge/Multi--Agent_Systems-7C5CFC?style=for-the-badge&labelColor=21174A" alt="Multi-Agent Systems">
   <img src="https://img.shields.io/badge/LLM_Evaluation-7C5CFC?style=for-the-badge&labelColor=21174A" alt="LLM Evaluation">
   <img src="https://img.shields.io/badge/Hybrid_RAG-7C5CFC?style=for-the-badge&labelColor=21174A" alt="Hybrid RAG">
   <img src="https://img.shields.io/badge/Azure_Functions-7C5CFC?style=for-the-badge&labelColor=21174A" alt="Azure Functions">
+  <img src="https://img.shields.io/badge/n8n-7C5CFC?style=for-the-badge&labelColor=21174A" alt="n8n automation">
+  <img src="https://img.shields.io/badge/Observability-7C5CFC?style=for-the-badge&labelColor=21174A" alt="Observability">
 </div>
+
+## Professional experience
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>NIIT MTS</h3>
+      <b>Project Intern</b> · Jul 2026 - Present<br><br>
+      Recently joined as a Project Intern at NIIT Learning Systems Limited.
+    </td>
+    <td width="50%" valign="top">
+      <h3>BluOryn Technologies Pvt. Ltd.</h3>
+      <b>Platforms Management Intern</b> · Sep 2025 - May 2026<br><br>
+      Owned platform modernization end-to-end, migrated the web platform from a restrictive builder ecosystem to a scalable cloud-native stack, and shipped Azure Functions, CRM workflows, WhatsApp and email automation, and lead-management pipelines.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>Proofr</h3>
+      <b>Startup Catalyst</b> · Jul 2025<br><br>
+      Selected among approximately 20 participants from 600+ applicants for startup research and validation work focused on India’s early-career hiring ecosystem.
+    </td>
+    <td width="50%" valign="top">
+      <h3>Equity Quest: Mock Stock</h3>
+      <b>Full-stack delivery in a two-person team</b><br><br>
+      Built and delivered a live event platform for IIDAIRA’25, owning project management, system architecture, and critical debugging across frontend and backend.
+    </td>
+  </tr>
+</table>
 
 ## Selected work
 
@@ -221,6 +252,23 @@
 
 <!--START_SECTION:activity-->
 <!--END_SECTION:activity-->
+
+## Certifications
+
+• Anthropic — AI Fluency: Framework & Foundations
+• Google DeepMind — AI Research Foundations
+• Google Partners — Prepare and Deliver Gemini Enterprise Deployments
+• Atlassian — Agile Project Management Professional Certificate
+• IBM — Project Management Fundamentals
+• McKinsey & Company — McKinsey.org Forward Program
+• Google — Data Analytics Professional Certificate
+• KX — q Developer Level 1
+
+## Leadership & Activities
+
+• PR & Outreach Executive, VITT – Finance & Investment Cell
+• Member, ISTE MSIT
+• Built and delivered a full-stack web platform for Equity Quest: Mock Stock at IIDAIRA’25 in a two-person team
 
 <details>
   <summary><b>Optional integrations</b> - Spotify, WakaTime, coding profiles, and community chess</summary>
