@@ -22,10 +22,6 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
       - name: Publish generated SVGs to output
-        uses: peaceiris/actions-gh-pages@09d8f313dcc84179c9f28dbbbe1f06f3ca174008 # v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: output
-          publish_dir: ./dist
-          keep_files: true
-          commit_message: "chore: refresh contribution snake"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/publish_output_branch.sh ./dist "chore: refresh contribution snake"

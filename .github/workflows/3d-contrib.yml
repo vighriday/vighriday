@@ -25,10 +25,6 @@ jobs:
           cp profile-3d-contrib/profile-green-animate.svg dist/contrib-3d-light.svg
           cp profile-3d-contrib/profile-night-view.svg dist/contrib-3d-dark.svg
       - name: Publish generated SVGs to output
-        uses: peaceiris/actions-gh-pages@09d8f313dcc84179c9f28dbbbe1f06f3ca174008 # v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: output
-          publish_dir: ./dist
-          keep_files: true
-          commit_message: "chore: refresh 3d contribution graph"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/publish_output_branch.sh ./dist "chore: refresh 3D contribution graph"

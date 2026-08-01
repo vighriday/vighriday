@@ -30,10 +30,6 @@ jobs:
           STARS="$(curl --fail --silent --show-error -H "Authorization: Bearer $GH_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/users/vighriday/repos?per_page=100" | jq '[.[].stargazers_count] | add // 0')"
           printf '{"schemaVersion":1,"label":"TOTAL STARS","message":"%s","color":"7C5CFC"}\n' "$STARS" > dist/stars.json
       - name: Publish refreshed assets to output
-        uses: peaceiris/actions-gh-pages@09d8f313dcc84179c9f28dbbbe1f06f3ca174008 # v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: output
-          publish_dir: ./dist
-          keep_files: true
-          commit_message: "chore: refresh profile signal"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/publish_output_branch.sh ./dist "chore: refresh profile signal"

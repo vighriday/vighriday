@@ -31,10 +31,6 @@ jobs:
           mkdir -p dist
           python scripts/ascii_portrait.py "$SOURCE" --output-dir dist --name ascii-portrait --ramp blocks --edge --color --animation all
       - name: Publish generated portrait assets to output
-        uses: peaceiris/actions-gh-pages@09d8f313dcc84179c9f28dbbbe1f06f3ca174008 # v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: output
-          publish_dir: ./dist
-          keep_files: true
-          commit_message: "chore: regenerate ASCII portrait"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/publish_output_branch.sh ./dist "chore: regenerate ASCII portrait"
