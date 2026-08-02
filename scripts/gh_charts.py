@@ -42,6 +42,26 @@ from theme import MONO_STACK, THEME, USERNAME, UTC_OFFSET, css_vars  # noqa: E40
 API = "https://api.github.com"
 GRAPHQL = "https://api.github.com/graphql"
 
+#: Marker every placeholder card carries in its rendered text.
+PLACEHOLDER_MARK = "PENDING"
+
+
+def write_unless_downgrade(path: Path, content: str, *, is_placeholder: bool) -> None:
+    """Write, but never replace a real chart with a placeholder.
+
+    Running this script without a token - which is the normal case on a laptop -
+    produces placeholders. Without this guard a local ``build.py`` silently
+    overwrites the real, token-built charts, and committing that publishes
+    "PENDING" cards over working ones. Downgrades are refused; upgrades and
+    like-for-like refreshes always go through.
+    """
+    if is_placeholder and path.exists():
+        existing = path.read_text(encoding="utf-8", errors="replace")
+        if PLACEHOLDER_MARK not in existing:
+            print(f"gh_charts: keeping real {path.name} (refusing to overwrite it with a placeholder)")
+            return
+    write(path, content)
+
 CRT_VARS = dict(
     extra_light={"scanInk": "#7A5A1E", "scanOp": ".06", "vig": ".08"},
     extra_dark={"scanInk": "#000000", "scanOp": ".26", "vig": ".38"},
@@ -585,17 +605,18 @@ def main() -> int:
     calendar = contribution_calendar(args.username, token)
     if calendar:
         weeks, total = calendar
-        write(out / "oscilloscope.svg", oscilloscope(weeks, total))
+        write_unless_downgrade(out / "oscilloscope.svg", oscilloscope(weeks, total), is_placeholder=False)
         print(f"gh_charts: oscilloscope -> {total} contributions over {len(weeks)} weeks")
     else:
         total = 0
-        write(
+        write_unless_downgrade(
             out / "oscilloscope.svg",
             placeholder(
                 "Contribution oscilloscope pending",
                 "refresh.yml needs a token with read:user to reach the contributions API.",
                 height=190,
             ),
+            is_placeholder=True,
         )
         print("gh_charts: oscilloscope -> placeholder (no calendar access)")
 
@@ -612,12 +633,13 @@ def main() -> int:
         local = (moment.hour + moment.minute / 60 + UTC_OFFSET) % 24
         hours[int(local)] += 1
     if hours:
-        write(out / "commit-clock.svg", commit_clock(hours))
+        write_unless_downgrade(out / "commit-clock.svg", commit_clock(hours), is_placeholder=False)
         print(f"gh_charts: commit-clock -> {sum(hours.values())} push events")
     else:
-        write(
+        write_unless_downgrade(
             out / "commit-clock.svg",
             placeholder("Commit clock pending", "No push events visible yet.", width=405, height=220),
+            is_placeholder=True,
         )
         print("gh_charts: commit-clock -> placeholder (no push events)")
 
@@ -633,12 +655,13 @@ def main() -> int:
             # size is a rough byte proxy and avoids one API call per repository.
             counter[language] += max(int(repo.get("size", 0)), 1)
     if counter:
-        write(out / "language-bars.svg", language_bars(counter.most_common()))
+        write_unless_downgrade(out / "language-bars.svg", language_bars(counter.most_common()), is_placeholder=False)
         print(f"gh_charts: language-bars -> {len(counter)} languages across {len(repos)} repos")
     else:
-        write(
+        write_unless_downgrade(
             out / "language-bars.svg",
             placeholder("Language mix pending", "No public repositories detected yet.", width=405, height=200),
+            is_placeholder=True,
         )
         print("gh_charts: language-bars -> placeholder (no languages)")
 
@@ -686,10 +709,10 @@ def main() -> int:
         )
         ranked += rest[: 4 - len(ranked)]
     if ranked:
-        write(out / "repo-pins.svg", repo_pins(ranked[:4]))
+        write_unless_downgrade(out / "repo-pins.svg", repo_pins(ranked[:4]), is_placeholder=False)
         print(f"gh_charts: repo-pins -> {', '.join(r['name'] for r in ranked[:4])}")
     else:
-        write(out / "repo-pins.svg", placeholder("Featured repositories pending", "No described public repositories yet."))
+        write_unless_downgrade(out / "repo-pins.svg", placeholder("Featured repositories pending", "No described public repositories yet."), is_placeholder=True)
 
     tiles: list[tuple[str, str]] = [
         (_fmt(stars), "stars earned"),
