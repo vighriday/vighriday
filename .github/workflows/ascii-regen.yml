@@ -29,6 +29,12 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  # Shared with refresh.yml: both commit to main, and running them at the same
+  # time makes one of them push against a stale checkout.
+  group: profile-main-commits
+  cancel-in-progress: false
+
 jobs:
   regen:
     name: rebuild the portrait

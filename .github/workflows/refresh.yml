@@ -57,6 +57,16 @@ jobs:
         # Never publish an asset that would fail the README's own test suite.
         run: python scripts/verify_readme.py
 
+      - name: Rebase onto any concurrent bot commit
+        # ascii-regen also triggers on push to main and also commits there, so
+        # this job's checkout can be stale by the time it wants to push. Without
+        # this the push is rejected non-fast-forward and a good build is thrown
+        # away. --autostash keeps the freshly generated, uncommitted assets.
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
+
       - name: Commit refreshed assets to main
         uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7.2.0
         with:
