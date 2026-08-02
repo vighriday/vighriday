@@ -272,6 +272,76 @@ def oscilloscope(weeks: list[list[int]], total: int, width: int = WIDTH) -> str:
 
 
 # --------------------------------------------------------------------------
+# Chart 1b - recent activity
+# --------------------------------------------------------------------------
+def activity_strip(weeks: list[list[int]], days: int = 31, width: int = WIDTH) -> str:
+    """The last N days as bars, from the *same* calendar the oscilloscope uses.
+
+    This replaces github-readme-activity-graph, which could only ever read the
+    public calendar. On a profile whose recent work is mostly in private repos,
+    that service draws a flat line at zero and makes an active month look dead.
+    Running off the tokened calendar instead means private contributions are
+    counted the moment GitHub is told to publish them.
+    """
+    series = [count for week in weeks for count in week][-days:] or [0]
+    height = 190
+    pad_l, pad_r, pad_t, pad_b = 44, 18, 30, 34
+    plot_w = width - pad_l - pad_r
+    plot_h = height - pad_t - pad_b
+    peak = max(series) or 1
+    slot = plot_w / len(series)
+    bar_w = max(3.0, slot * 0.62)
+
+    bars = []
+    for index, value in enumerate(series):
+        bar_h = (value / peak) * plot_h
+        x = pad_l + index * slot + (slot - bar_w) / 2
+        y = pad_t + plot_h - bar_h
+        bars.append(
+            f'<rect class="b b{index % 8}" x="{x:.1f}" y="{y:.1f}" width="{bar_w:.1f}" '
+            f'height="{max(bar_h, 1.2):.1f}" rx="1.5"/>'
+        )
+
+    grid = "".join(
+        f'<line x1="{pad_l}" y1="{pad_t + plot_h * f:.1f}" x2="{width - pad_r}" '
+        f'y2="{pad_t + plot_h * f:.1f}" stroke="var(--grid)" stroke-width="1"/>'
+        for f in (0, 0.5, 1)
+    )
+    labels = "".join(
+        f'<text class="ax" x="{pad_l - 8}" y="{pad_t + plot_h * f + 3:.1f}" text-anchor="end">'
+        f"{round(peak * (1 - f))}</text>"
+        for f in (0, 0.5, 1)
+    )
+
+    css = (
+        css_vars(**CRT_VARS)
+        + f".ax{{fill:var(--muted);font-family:{MONO_STACK};font-size:9px}}"
+        + f".hd{{fill:var(--muted);font-family:{MONO_STACK};font-size:9px;letter-spacing:2px}}"
+        + f".val{{fill:var(--accent);font-family:{MONO_STACK};font-size:13px;font-weight:700}}"
+        + ".b{fill:var(--accent);transform-origin:center bottom;animation:rise 3.6s ease-out infinite}"
+        + "".join(f".b{i}{{animation-delay:{i * 0.035:.3f}s}}" for i in range(8))
+        + "@keyframes rise{0%{transform:scaleY(0);opacity:.3}22%{transform:scaleY(1);opacity:1}"
+        "92%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:.75}}"
+    )
+    return (
+        svg_open(
+            width, height, f"Contributions over the last {days} days",
+            f"Daily contribution counts for the last {days} days, totalling {sum(series)}, "
+            "including private repositories.",
+            ids="at2 ad2",
+        )
+        + f"<style>{css}</style>"
+        + f'<rect width="{width}" height="{height}" rx="14" fill="var(--bg)" stroke="var(--grid)"/>'
+        + grid + labels + "".join(bars)
+        + f'<text class="hd" x="{pad_l}" y="18">CONTRIBUTIONS / LAST {days} DAYS</text>'
+        + f'<text class="val" x="{width - pad_r}" y="19" text-anchor="end">{sum(series)}</text>'
+        + f'<text class="ax" x="{pad_l}" y="{height - 12}">{days} days ago</text>'
+        + f'<text class="ax" x="{width - pad_r}" y="{height - 12}" text-anchor="end">today</text>'
+        + "</svg>\n"
+    )
+
+
+# --------------------------------------------------------------------------
 # Chart 2 - commits by hour
 # --------------------------------------------------------------------------
 def commit_clock(hours: Counter, width: int = 405) -> str:
@@ -606,7 +676,9 @@ def main() -> int:
     if calendar:
         weeks, total = calendar
         write_unless_downgrade(out / "oscilloscope.svg", oscilloscope(weeks, total), is_placeholder=False)
+        write_unless_downgrade(out / "activity-31d.svg", activity_strip(weeks), is_placeholder=False)
         print(f"gh_charts: oscilloscope -> {total} contributions over {len(weeks)} weeks")
+        print(f"gh_charts: activity-31d -> last 31 days rendered")
     else:
         total = 0
         write_unless_downgrade(
@@ -618,7 +690,12 @@ def main() -> int:
             ),
             is_placeholder=True,
         )
-        print("gh_charts: oscilloscope -> placeholder (no calendar access)")
+        write_unless_downgrade(
+            out / "activity-31d.svg",
+            placeholder("Recent activity pending", "refresh.yml needs a token to reach the contributions API.", height=190),
+            is_placeholder=True,
+        )
+        print("gh_charts: oscilloscope + activity-31d -> placeholder (no calendar access)")
 
     # --- commit clock -----------------------------------------------------
     events = public_events(args.username, token)

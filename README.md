@@ -104,7 +104,7 @@
 <div align="center">
 
   <b>Languages</b><br>
-  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python,ts,js,java,sql&perline=5" alt="Languages: Python, TypeScript, JavaScript, Java, SQL"></a>
+  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python,ts,js,java&perline=4" alt="Languages: Python, TypeScript, JavaScript, Java"></a>
 
   <b>Frameworks</b><br>
   <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=react,nextjs,fastapi,flask,nodejs,spring&perline=6" alt="Frameworks: React, Next.js, FastAPI, Flask, Node.js, Spring Boot"></a>
@@ -112,8 +112,8 @@
   <b>Cloud &amp; tooling</b><br>
   <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=azure,docker,githubactions,git,linux,vercel&perline=6" alt="Cloud and tooling: Azure, Docker, GitHub Actions, Git, Linux, Vercel"></a>
 
-  <b>Data</b><br>
-  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=mongodb,postgres,redis,sqlite&perline=4" alt="Databases: MongoDB, PostgreSQL, Redis, SQLite"></a>
+  <b>Data &amp; SQL</b><br>
+  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=mysql,postgres,sqlite,mongodb,redis&perline=5" alt="Data and SQL: MySQL, PostgreSQL, SQLite, MongoDB, Redis"></a>
 
   <br>
 
@@ -227,10 +227,7 @@
     <img src="https://streak-stats.demolab.com?user=vighriday&background=FFFBF2&border=F0DFBE&stroke=F0DFBE&ring=FF8A00&fire=FF8A00&currStreakLabel=FF8A00&sideLabels=7A5A1E&currStreakNum=241802&sideNums=241802&dates=7A5A1E" alt="Current and longest contribution streak" width="500">
   </picture>
 
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-activity-graph.vercel.app/graph?username=vighriday&bg_color=0B0906&color=FFE9BE&line=FFB000&point=FFD37A&area_color=FFB000&title_color=FFB000&area=true&hide_border=true">
-    <img src="https://github-readme-activity-graph.vercel.app/graph?username=vighriday&bg_color=FFFBF2&color=241802&line=FF8A00&point=FF8A00&area_color=FFB000&title_color=FF8A00&area=true&hide_border=true" alt="Daily contribution activity over the last 31 days" width="830">
-  </picture>
+  <img src="assets/activity-31d.svg" alt="Daily contribution counts for the last 31 days, including private repositories" width="830">
 
 </div>
 
