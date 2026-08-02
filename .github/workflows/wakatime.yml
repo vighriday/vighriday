@@ -44,6 +44,12 @@ jobs:
 
       - name: Update the WakaTime block
         if: steps.gate.outputs.enabled == 'true'
+        id: waka
+        # A valid key with no recorded time makes this action exit non-zero
+        # ("Unable to fetch data"). That is the expected state until an editor
+        # plugin has actually sent heartbeats, so it must not redden the whole
+        # Actions tab - the next step explains what happened instead.
+        continue-on-error: true
         uses: athul/waka-readme@8539bedb8277066fc9fe1b47d1f9b108eb866494 # v0.3.1
         with:
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
@@ -55,6 +61,14 @@ jobs:
           SHOW_TIME: "True"
           SHOW_TOTAL: "True"
           COMMIT_MESSAGE: "wakatime: sync weekly coding breakdown"
+
+      - name: Explain an empty result
+        if: steps.gate.outputs.enabled == 'true' && steps.waka.outcome == 'failure'
+        run: |
+          echo "::notice::WakaTime returned no data. The key is being read correctly - \
+          the account simply has no recorded time yet. WakaTime only receives data from \
+          an editor plugin; install one (VS Code: 'WakaTime' by WakaTime), write code for \
+          a few minutes, then re-run this workflow. See SETUP.md, WakaTime."
 
       - name: Verify the README still renders safely
         if: steps.gate.outputs.enabled == 'true'
