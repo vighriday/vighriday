@@ -42,6 +42,13 @@ jobs:
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Create the output directory
+        # metrics writes to `filename` without creating parent directories, and
+        # swallows the resulting write error, so the render step reports success
+        # having produced nothing.
+        if: steps.gate.outputs.enabled == 'true'
+        run: mkdir -p dist
+
       - name: Render dark dashboard
         if: steps.gate.outputs.enabled == 'true'
         uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
@@ -120,7 +127,18 @@ jobs:
         # previously let a broken run publish an empty directory and look green.
         if: steps.gate.outputs.enabled == 'true'
         run: |
-          ls -la dist 2>/dev/null || true
+          echo "--- SVGs in the workspace ---"
+          find . -name '*.svg' -not -path './.git/*' -newermt '-15 minutes' -print
+
+          # Recover if metrics wrote somewhere other than the requested path.
+          for pair in "dark" "light"; do
+            target="dist/metrics-$pair.svg"
+            if [ ! -s "$target" ]; then
+              found=$(find . -name "*metrics*$pair*.svg" -not -path './.git/*' -not -path "./$target" | head -1)
+              [ -n "$found" ] && cp "$found" "$target" && echo "recovered $target <- $found"
+            fi
+          done
+
           missing=0
           for f in dist/metrics-dark.svg dist/metrics-light.svg; do
             if [ ! -s "$f" ]; then
