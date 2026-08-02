@@ -124,7 +124,7 @@ finishing in the same minute would race and one would lose its push.
 
 | Name | Kind | Required for | How to get it |
 |------|------|--------------|---------------|
-| `METRICS_TOKEN` | Secret | `metrics.yml`, and the contribution oscilloscope in `refresh.yml` | [Classic PAT](https://github.com/settings/tokens/new?scopes=public_repo,read:user) with `public_repo` + `read:user` |
+| `METRICS_TOKEN` | Secret | `metrics.yml` only | [Classic PAT](https://github.com/settings/tokens/new?scopes=public_repo,read:user) with `public_repo` + `read:user` |
 | `WAKATIME_API_KEY` | Secret | `wakatime.yml` | <https://wakatime.com/settings/api-key> |
 | `BLOG_FEED_URLS` | **Variable** | `blog-posts.yml` | Your RSS URL(s), comma-separated |
 
@@ -134,13 +134,17 @@ finishing in the same minute would race and one would lose its push.
 > committing one would publish the key to a public repo. `.env` is gitignored
 > here for that reason. Secrets go in the repository secrets UI, full stop.
 
-### Why `METRICS_TOKEN` is also used by `refresh.yml`
+### Why `refresh.yml` also reaches for `METRICS_TOKEN`
 
 The contribution calendar is only exposed through GitHub's GraphQL API, which
-rejects anonymous requests and does not always accept the default
-`GITHUB_TOKEN` for another user's contribution data. `refresh.yml` prefers
-`METRICS_TOKEN` and falls back to `GITHUB_TOKEN`. If neither works, the
-oscilloscope renders a labelled placeholder and the workflow still passes.
+rejects anonymous requests outright. `refresh.yml` prefers `METRICS_TOKEN` and
+falls back to `GITHUB_TOKEN`.
+
+**In practice the fallback is enough** — verified on the first run, where the
+default `GITHUB_TOKEN` returned the full calendar and the oscilloscope rendered
+real data. So `METRICS_TOKEN` is only genuinely required by `metrics.yml`. If
+neither token works, the oscilloscope renders a labelled placeholder and the
+workflow still passes.
 
 ### WakaTime
 
