@@ -275,7 +275,13 @@ def check_output_branch(source: str, workflows: Path) -> list[Finding]:
     seeded: set[str] = set()
     for path in sorted(workflows.glob("*.yml")):
         text = path.read_text(encoding="utf-8")
+        # Two ways a workflow can produce an output-branch file:
+        #   1. write it into dist/ and hand that to the publish action
+        #   2. hand `filename:` to an action that commits to the branch itself
+        #      (lowlighter/metrics runs in Docker and can only do the latter)
         produced.update(re.findall(r"dist/([A-Za-z0-9._-]+\.(?:svg|json))", text))
+        if re.search(r"committer_branch:\s*output", text):
+            produced.update(re.findall(r"^\s*filename:\s*([A-Za-z0-9._-]+\.(?:svg|json))", text, re.M))
         seeded.update(re.findall(r"^\s*seed\s+([A-Za-z0-9._-]+)\s", text, re.M))
 
     for match in OUTPUT_REF_RE.finditer(source):
