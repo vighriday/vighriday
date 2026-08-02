@@ -40,8 +40,11 @@ jobs:
           find . -name '*.svg' -not -path './.git/*' -newermt '-10 minutes' -print
 
           mkdir -p dist
-          dark=$(find . -name '*pacman*dark*.svg' -not -path './dist/*' | head -1)
-          light=$(find . -name '*pacman*.svg' -not -path './dist/*' ! -name '*dark*' | head -1)
+          # The action happens to write into dist/ already, so search everywhere
+          # and exclude only the normalised target names - excluding dist/ itself
+          # would skip the very files being looked for.
+          dark=$(find . -name '*pacman*dark*.svg' -not -path './.git/*' ! -name 'pacman-dark.svg' | head -1)
+          light=$(find . -name '*pacman*.svg' -not -path './.git/*' ! -name '*dark*' ! -name 'pacman-light.svg' | head -1)
 
           if [ -z "$dark" ] && [ -z "$light" ]; then
             echo "::error::The Pac-Man action produced no SVG. Its output filenames may have changed upstream."
