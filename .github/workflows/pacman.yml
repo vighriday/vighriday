@@ -1,28 +1,39 @@
-name: Generate Pacman contribution graph
+# Pac-Man contribution graph. Kept inside a <details> in the README so the page
+# is not two full-width games stacked on top of each other.
+name: pacman
 
 on:
   schedule:
-    - cron: "29 0 * * *"
+    - cron: "47 2 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: profile-output-branch
+  cancel-in-progress: false
+
 jobs:
-  build:
+  pacman:
+    name: generate and publish
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
-      - name: Generate themed arcade graph
-        uses: abozanona/pacman-contribution-graph@7332e1de7903ab780c3692a4127a59cc13872daa # main at 2026-08-01
+      - name: Generate Pac-Man graph in both themes
+        uses: abozanona/pacman-contribution-graph@7332e1de7903ab780c3692a4127a59cc13872daa # v5.3.2
         with:
-          github_user_name: vighriday
-          games: pacman
-      - name: Publish generated SVGs to output
-        uses: crazy-max/ghaction-github-pages@1ebdede6822df72b485a37eecfadbea9a70a3e7d # v4
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/pacman-light.svg?gameTheme=github
+            dist/pacman-dark.svg?gameTheme=github-dark
+
+      - name: Publish to output branch
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
         with:
-          target_branch: output
-          build_dir: dist
-          keep_history: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: ./dist
+          keep_files: true
+          commit_message: "pacman: refresh contribution graph"
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

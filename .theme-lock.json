@@ -1,0 +1,15 @@
+{
+  "accent": "#FFB000",
+  "accent_deep": "#FF8A00",
+  "accent_soft": "#FFD37A",
+  "bg_dark": "#0B0906",
+  "surface_dark": "#14100A",
+  "ink_dark": "#FFE9BE",
+  "muted_dark": "#B8925A",
+  "grid_dark": "#3A2C12",
+  "bg_light": "#FFFBF2",
+  "surface_light": "#FFF6E6",
+  "ink_light": "#241802",
+  "muted_light": "#7A5A1E",
+  "grid_light": "#F0DFBE"
+}

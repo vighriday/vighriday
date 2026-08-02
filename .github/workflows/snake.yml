@@ -1,27 +1,44 @@
-name: Generate contribution snake
+# Contribution snake, themed amber, published to the output branch.
+name: snake
 
 on:
   schedule:
-    - cron: "17 0 * * *"
+    # Staggered against every other asset workflow so they never collide on the
+    # output branch and never spike the API in the same minute.
+    - cron: "17 2 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  # Shared by every workflow that writes to the output branch. Serialising them
+  # is the difference between "published" and "one of them lost a race".
+  group: profile-output-branch
+  cancel-in-progress: false
+
 jobs:
-  build:
+  snake:
+    name: generate and publish
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4.6.0
-      - name: Generate light and dark snakes
-        uses: Platane/snk@a041d6c27ba561a39f5be9c26a784812765e434b # v3
+      - name: Generate snake in both themes
+        uses: Platane/snk@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3.5.0
         with:
-          github_user_name: vighriday
+          github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-contribution-grid-snake.svg
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
-      - name: Publish generated SVGs to output
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/publish_output_branch.sh ./dist "chore: refresh contribution snake"
+            dist/snake-light.svg?color_snake=#FF8A00&color_dots=#FFFBF2,#F0DFBE,#FFD37A,#FFB000,#FF8A00
+            dist/snake-dark.svg?color_snake=#FFB000&color_dots=#0B0906,#3A2C12,#7A5A1E,#FF8A00,#FFB000
+
+      - name: Publish to output branch
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: ./dist
+          # Every workflow publishes into the same branch, so files written by
+          # the other generators have to survive this push.
+          keep_files: true
+          commit_message: "snake: refresh contribution animation"
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

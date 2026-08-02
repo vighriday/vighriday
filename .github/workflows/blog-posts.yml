@@ -1,4 +1,10 @@
-name: Update latest blog posts
+# Pull the five most recent posts from an RSS feed into the README.
+#
+# No feed is configured yet: BLOG_FEED_URLS is empty, so this workflow exits
+# cleanly instead of writing an empty list over the placeholder. Set the
+# repository variable BLOG_FEED_URLS (Settings > Secrets and variables >
+# Actions > Variables) to switch it on. See SETUP.md section 5.
+name: blog-posts
 
 on:
   schedule:
@@ -9,17 +15,44 @@ permissions:
   contents: write
 
 jobs:
-  update:
-    if: ${{ vars.BLOG_RSS_URL != '' }}
+  posts:
+    name: sync latest writing
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4.6.0
-      - name: Insert the five most recent posts
-        uses: gautamkrishnar/blog-post-workflow@2786e54a01b71aec80a5118c2bd6b5044e842597 # v1.9.3
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        # verify_readme.py is stdlib-only, so no dependency install is needed.
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          feed_list: ${{ vars.BLOG_RSS_URL }}
-          max_post_count: "5"
+          python-version: "3.12"
+
+      - name: Check for a configured feed
+        id: gate
+        env:
+          FEEDS: ${{ vars.BLOG_FEED_URLS }}
+        run: |
+          if [ -z "$FEEDS" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::BLOG_FEED_URLS is not set; leaving the placeholder in place."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sync posts into the README
+        if: steps.gate.outputs.enabled == 'true'
+        uses: gautamkrishnar/blog-post-workflow@2786e54a01b71aec80a5118c2bd6b5044e842597 # 1.9.6
+        with:
+          feed_list: ${{ vars.BLOG_FEED_URLS }}
+          max_post_count: 5
           comment_tag_name: BLOG-POST-LIST
-          template: "$newline- [$title]($url)$newline"
-          commit_message: "chore: refresh blog posts"
+          template: "- [$title]($url) &middot; <sub>$newline$date</sub>$newline"
+          date_format: "mmm d, yyyy"
+          commit_message: "blog: sync latest posts"
+          committer_username: github-actions[bot]
+          committer_email: github-actions[bot]@users.noreply.github.com
+
+      - name: Verify the README still renders safely
+        if: steps.gate.outputs.enabled == 'true'
+        run: python scripts/verify_readme.py --assets assets

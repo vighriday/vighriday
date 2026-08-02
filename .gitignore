@@ -1,2 +1,20 @@
 __pycache__/
 *.py[cod]
+
+# Personal documents - never publish these on a public profile repo
+*.pdf
+.env
+.env.*
+!.env.example
+
+# Local tool state - may contain repository analysis and absolute local paths.
+# Also covered by a global gitignore on the author's machine, but that is
+# machine-local: a fresh clone elsewhere would not have it.
+.veris/
+
+# Local scratch
+.cache/
+preview/
+.playwright-mcp/
+_svgcheck.html
+_ghpreview.html

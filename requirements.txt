@@ -1,2 +1,6 @@
-Pillow==10.4.0
-numpy==2.1.1
+# Only the ASCII portrait renderer needs third-party packages.
+# theme.py, build_assets.py, gh_charts.py, quote.py, retheme.py, build.py and
+# verify_readme.py are deliberately stdlib-only, so CI can lint and publish
+# without installing anything.
+Pillow>=10.4,<13
+numpy>=2.0,<3

@@ -1,25 +1,61 @@
-name: Update weekly WakaTime coding stats
+# Weekly coding-time breakdown from WakaTime.
+#
+# Optional. Needs the WAKATIME_API_KEY repository secret - a *repository
+# secret*, not a .env file: GitHub Actions cannot read a .env from your machine,
+# and committing one would publish the key. Get the key from
+# https://wakatime.com/settings/api-key and add it under
+# Settings > Secrets and variables > Actions > New repository secret.
+#
+# Without the secret this workflow no-ops and the README keeps its placeholder.
+name: wakatime
 
 on:
   schedule:
-    - cron: "37 2 * * *"
+    - cron: "47 4 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  update:
-    if: ${{ vars.ENABLE_WAKATIME == 'true' }}
+  wakatime:
+    name: sync coding time
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4.6.0
-      - name: Insert weekly coding-time breakdown
-        uses: athul/waka-readme@370590ad8da8f54282ed92aa42b7c25ecbd5a9a6 # master at 2026-08-01
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Check for the WakaTime key
+        id: gate
+        env:
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+        run: |
+          if [ -z "$WAKATIME_API_KEY" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::WAKATIME_API_KEY is not set; skipping. See SETUP.md, WakaTime."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update the WakaTime block
+        if: steps.gate.outputs.enabled == 'true'
+        uses: athul/waka-readme@8539bedb8277066fc9fe1b47d1f9b108eb866494 # v0.3.1
         with:
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
-          COMMIT_MESSAGE: "chore: refresh WakaTime stats"
-          SHOW_TITLE: true
-          BLOCKS: ░▒▓█
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHOW_TITLE: "True"
+          BLOCKS: "=>"
           TIME_RANGE: last_7_days
+          LANG_COUNT: 6
+          SHOW_TIME: "True"
+          SHOW_TOTAL: "True"
+          COMMIT_MESSAGE: "wakatime: sync weekly coding breakdown"
+
+      - name: Verify the README still renders safely
+        if: steps.gate.outputs.enabled == 'true'
+        run: python scripts/verify_readme.py --assets assets

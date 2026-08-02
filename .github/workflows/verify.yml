@@ -1,0 +1,53 @@
+# The profile has CI.
+#
+# A README fails silently: a stripped tag just vanishes, a missing alt attribute
+# just excludes people, an oversized table just scrolls sideways on a phone, a
+# dead <picture> source just shows nothing in one theme. None of that is visible
+# from reading the diff, so it gets asserted instead.
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: assert the README is safe to render
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        run: pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Verify the verifier
+        run: python scripts/verify_readme.py --self-test
+
+      - name: Verify README and generated SVGs
+        run: python scripts/verify_readme.py
+
+      - name: Assert assets are reproducible
+        # Regenerating from scratch must produce byte-identical output. If it
+        # does not, an asset was hand-edited and the next scheduled run would
+        # silently revert it.
+        run: |
+          python scripts/build_assets.py --timestamp "PINNED FOR REPRODUCIBILITY CHECK"
+          python scripts/ascii_portrait.py assets/portrait-source.png --animation all
+          if ! git diff --quiet -- assets/signature-divider.svg assets/hero-crt.svg assets/ascii-portrait-static.svg; then
+            echo "::error::Generated assets differ from their generators. Run scripts/build.py and commit the result."
+            git --no-pager diff --stat -- assets/
+            exit 1
+          fi
+          echo "Assets reproduce exactly."

@@ -1,30 +1,52 @@
-name: Generate 3D contribution graph
+# Isometric 3D contribution calendar.
+name: 3d-contrib
 
 on:
   schedule:
-    - cron: "43 0 * * *"
+    - cron: "17 3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: profile-output-branch
+  cancel-in-progress: false
+
 jobs:
   build:
+    name: generate and publish
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4.6.0
-      - name: Render contribution calendar in 3D
-        uses: yoshi389111/github-profile-3d-contrib@9e3f937195cf840d364388973f73e3c4b3753586 # latest at 2026-08-01
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Render isometric calendar
+        uses: yoshi389111/github-profile-3d-contrib@7d95e7d4cdc028dd1e1cbd957d65f35efb12ae39 # v0.9.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: vighriday
-      - name: Stage light and dark 3D views
+          USERNAME: ${{ github.repository_owner }}
+          # This generator ships fixed palettes rather than colour parameters.
+          # SETTING_JSON is the supported escape hatch; see SETUP.md for the
+          # schema if you want the isometric view repainted amber too.
+          MAX_REPOS: "100"
+
+      - name: Collect the two variants we actually embed
         run: |
           mkdir -p dist
-          cp profile-3d-contrib/profile-green-animate.svg dist/contrib-3d-light.svg
-          cp profile-3d-contrib/profile-night-view.svg dist/contrib-3d-dark.svg
-      - name: Publish generated SVGs to output
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/publish_output_branch.sh ./dist "chore: refresh 3D contribution graph"
+          # The action writes a family of variants; pick the one that reads best
+          # per theme and normalise the names the README points at.
+          cp profile-3d-contrib/profile-night-view.svg   dist/contrib-3d-dark.svg
+          cp profile-3d-contrib/profile-season-animate.svg dist/contrib-3d-light.svg
+          ls -la dist
+
+      - name: Publish to output branch
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: ./dist
+          keep_files: true
+          commit_message: "3d-contrib: refresh isometric calendar"
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

@@ -1,93 +1,126 @@
-name: Generate full metrics dashboard
+# lowlighter/metrics - the mega-dashboard, rendered twice so <picture> has a
+# real asset for each GitHub theme.
+#
+# Requires METRICS_TOKEN: a classic PAT with `public_repo` and `read:user`.
+# The default GITHUB_TOKEN cannot read the data most of these plugins need.
+# Without the secret this workflow no-ops instead of failing - the README keeps
+# showing assets/metrics-placeholder.svg and nothing looks broken.
+name: metrics
 
 on:
   schedule:
-    - cron: "11 1 * * *"
+    - cron: "47 3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: profile-output-branch
+  cancel-in-progress: false
+
 jobs:
-  light:
+  metrics:
+    name: render dashboard
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     steps:
-      - name: Render light dashboard
-        uses: lowlighter/metrics@366f8b9dfe3a59656c67d5dcad9950f59c9bc96d # v3.34
-        with:
-          token: ${{ secrets.METRICS_TOKEN || github.token }}
-          user: vighriday
-          template: classic
-          filename: metrics-light.svg
-          output_action: commit
-          committer_branch: output
-          committer_message: "chore: refresh light metrics dashboard"
-          base: header, activity, community, repositories, metadata
-          config_display: large
-          config_timezone: Asia/Kolkata
-          config_twemoji: yes
-          config_theme: light
-          plugin_isocalendar: yes
-          plugin_isocalendar_duration: full-year
-          plugin_languages: yes
-          plugin_languages_limit: 8
-          plugin_languages_sections: most-used, recently-used
-          plugin_languages_details: percentage, bytes-size
-          plugin_languages_indepth: yes
-          plugin_habits: yes
-          plugin_habits_from: 365
-          plugin_habits_charts: yes
-          plugin_achievements: yes
-          plugin_achievements_threshold: C
-          plugin_notable: yes
-          plugin_repositories: yes
-          plugin_repositories_featured: vighriday/Veris, vighriday/Pulse, vighriday/offside-june-2026
-          plugin_stargazers: yes
-          plugin_stargazers_limit: 3
-          # Optional plugins remain off until their corresponding SETUP.md values exist.
-          plugin_rss: no
-          plugin_music: no
-          plugin_chess: no
-          plugin_leetcode: no
-  dark:
-    needs: light
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
+      - name: Check for the metrics token
+        id: gate
+        env:
+          METRICS_TOKEN: ${{ secrets.METRICS_TOKEN }}
+        run: |
+          if [ -z "$METRICS_TOKEN" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::METRICS_TOKEN is not set; skipping. See SETUP.md section 3."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Render dark dashboard
-        uses: lowlighter/metrics@366f8b9dfe3a59656c67d5dcad9950f59c9bc96d # v3.34
+        if: steps.gate.outputs.enabled == 'true'
+        uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
-          token: ${{ secrets.METRICS_TOKEN || github.token }}
-          user: vighriday
-          template: classic
-          filename: metrics-dark.svg
-          output_action: commit
-          committer_branch: output
-          committer_message: "chore: refresh dark metrics dashboard"
-          base: header, activity, community, repositories, metadata
-          config_display: large
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: ${{ github.repository_owner }}
+          filename: dist/metrics-dark.svg
+          output_action: none
           config_timezone: Asia/Kolkata
-          config_twemoji: yes
-          config_theme: dark
+          config_output: svg
+          base: header, activity, community, repositories, metadata
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
           plugin_languages: yes
+          plugin_languages_details: bytes-size, percentage
           plugin_languages_limit: 8
-          plugin_languages_sections: most-used, recently-used
-          plugin_languages_details: percentage, bytes-size
-          plugin_languages_indepth: yes
           plugin_habits: yes
-          plugin_habits_from: 365
+          plugin_habits_from: 200
           plugin_habits_charts: yes
+          plugin_habits_facts: yes
           plugin_achievements: yes
-          plugin_achievements_threshold: C
+          plugin_achievements_threshold: B
+          plugin_achievements_display: compact
           plugin_notable: yes
-          plugin_repositories: yes
-          plugin_repositories_featured: vighriday/Veris, vighriday/Pulse, vighriday/offside-june-2026
+          plugin_notable_types: commit
           plugin_stargazers: yes
-          plugin_stargazers_limit: 3
-          plugin_rss: no
-          plugin_music: no
-          plugin_chess: no
-          plugin_leetcode: no
+          plugin_stargazers_charts: yes
+          # Metrics ships light/dark themes rather than colour parameters, so
+          # the palette is imposed with extras_css instead. This is the only
+          # third-party card on the page that needs that treatment.
+          extras_css: |
+            svg { --color-text: #FFE9BE; --color-title: #FFB000; --color-subtitle: #B8925A; }
+            .background, svg > rect:first-of-type { fill: #0B0906; }
+            h1, h2, .title { fill: #FFB000 !important; color: #FFB000 !important; }
+            text, .field, tspan { fill: #FFE9BE; }
+            .calendar-graph-day-L1 { fill: #3A2C12; }
+            .calendar-graph-day-L2 { fill: #7A5A1E; }
+            .calendar-graph-day-L3 { fill: #FF8A00; }
+            .calendar-graph-day-L4 { fill: #FFB000; }
+
+      - name: Render light dashboard
+        if: steps.gate.outputs.enabled == 'true'
+        uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: ${{ github.repository_owner }}
+          filename: dist/metrics-light.svg
+          output_action: none
+          config_timezone: Asia/Kolkata
+          config_output: svg
+          base: header, activity, community, repositories, metadata
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          plugin_languages: yes
+          plugin_languages_details: bytes-size, percentage
+          plugin_languages_limit: 8
+          plugin_habits: yes
+          plugin_habits_from: 200
+          plugin_habits_charts: yes
+          plugin_habits_facts: yes
+          plugin_achievements: yes
+          plugin_achievements_threshold: B
+          plugin_achievements_display: compact
+          plugin_notable: yes
+          plugin_notable_types: commit
+          plugin_stargazers: yes
+          plugin_stargazers_charts: yes
+          extras_css: |
+            svg { --color-text: #241802; --color-title: #FF8A00; --color-subtitle: #7A5A1E; }
+            .background, svg > rect:first-of-type { fill: #FFFBF2; }
+            h1, h2, .title { fill: #FF8A00 !important; color: #FF8A00 !important; }
+            text, .field, tspan { fill: #241802; }
+            .calendar-graph-day-L1 { fill: #F0DFBE; }
+            .calendar-graph-day-L2 { fill: #FFD37A; }
+            .calendar-graph-day-L3 { fill: #FFB000; }
+            .calendar-graph-day-L4 { fill: #FF8A00; }
+
+      - name: Publish to output branch
+        if: steps.gate.outputs.enabled == 'true'
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: ./dist
+          keep_files: true
+          commit_message: "metrics: refresh dashboard"
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

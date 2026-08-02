@@ -1,36 +1,72 @@
-name: Regenerate ASCII portrait
+# Drop a new photo at assets/portrait-source.png, push, and the ASCII portrait
+# regenerates itself. No local Python required.
+name: ascii-regen
 
 on:
   push:
+    branches: [main]
     paths:
-      - "assets/portrait-source.*"
+      - "assets/portrait-source.png"
       - "scripts/ascii_portrait.py"
-      - "requirements.txt"
+      - "scripts/theme.py"
   workflow_dispatch:
+    inputs:
+      ramp:
+        description: "Character ramp"
+        required: false
+        default: blocks
+        type: choice
+        options: [blocks, classic, fine, braille]
+      width:
+        description: "Character columns (24-140)"
+        required: false
+        default: "64"
+      edge:
+        description: "Edge darkening, 0 disables"
+        required: false
+        default: "0.28"
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  regen:
+    name: rebuild the portrait
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4.6.0
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v5.6.0
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
-          cache: pip
-      - name: Install portrait renderer dependencies
-        run: pip install -r requirements.txt
-      - name: Generate static, scanline, and shimmer variants
+
+      - name: Install build dependencies
+        run: pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Fetch the avatar if no source photo is committed
         run: |
-          SOURCE="assets/portrait-placeholder.ppm"
-          if [ -f assets/portrait-source.jpg ]; then SOURCE="assets/portrait-source.jpg"; fi
-          if [ -f assets/portrait-source.png ]; then SOURCE="assets/portrait-source.png"; fi
-          mkdir -p dist
-          python scripts/ascii_portrait.py "$SOURCE" --output-dir dist --name ascii-portrait --ramp blocks --edge --color --animation all
-      - name: Publish generated portrait assets to output
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/publish_output_branch.sh ./dist "chore: regenerate ASCII portrait"
+          if [ ! -f assets/portrait-source.png ]; then
+            echo "No committed photo; falling back to the GitHub avatar."
+            python scripts/fetch_avatar.py --username "${{ github.repository_owner }}"
+          fi
+
+      - name: Render ASCII portrait
+        run: |
+          python scripts/ascii_portrait.py assets/portrait-source.png \
+            --ramp "${{ inputs.ramp || 'blocks' }}" \
+            --width "${{ inputs.width || '64' }}" \
+            --edge "${{ inputs.edge || '0.28' }}" \
+            --animation all
+
+      - name: Verify the rendered SVGs
+        run: python scripts/verify_readme.py
+
+      - name: Commit the portrait
+        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7.2.0
+        with:
+          commit_message: "ascii: regenerate portrait from source photo"
+          file_pattern: assets/ascii-portrait-*.svg assets/ascii-portrait*.txt
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
