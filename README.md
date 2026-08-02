@@ -236,12 +236,6 @@
 
 ### Self-hosted instruments
 
-<blockquote>
-Rendered from the GitHub API into committed SVGs by <code>refresh.yml</code>.
-No third-party service sits between you and these, so they cannot rate-limit,
-archive, or 404. See <a href="scripts/gh_charts.py">scripts/gh_charts.py</a>.
-</blockquote>
-
 <div align="center">
 
   <img src="assets/oscilloscope.svg" alt="A year of GitHub contributions drawn as an animated amber oscilloscope trace" width="830">
@@ -263,13 +257,6 @@ archive, or 404. See <a href="scripts/gh_charts.py">scripts/gh_charts.py</a>.
 <div align="center"><img src="assets/signature-divider.svg" alt="Animated amber oscilloscope divider" width="830"></div>
 
 ## Contribution art
-
-<blockquote>
-Generated from my real contribution graph by scheduled GitHub Actions
-(<code>snake.yml</code>, <code>pacman.yml</code>, <code>3d-contrib.yml</code>),
-published to the <code>output</code> branch, and re-rendered daily. Each one
-shows a themed placeholder until its workflow has run.
-</blockquote>
 
 <div align="center">
   <picture>

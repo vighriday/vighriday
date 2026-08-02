@@ -24,6 +24,12 @@ jobs:
     name: render dashboard
     runs-on: ubuntu-latest
     steps:
+      - name: Check out
+        # Required. Without a checked-out repository the publish action finds no
+        # git worktree, decides this is a "first deployment", and then dies on
+        # `git checkout --orphan output` because that branch already exists.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
       - name: Check for the metrics token
         id: gate
         env:
@@ -59,8 +65,6 @@ jobs:
           plugin_achievements: yes
           plugin_achievements_threshold: B
           plugin_achievements_display: compact
-          plugin_notable: yes
-          plugin_notable_types: commit
           plugin_stargazers: yes
           plugin_stargazers_charts: yes
           # Metrics ships light/dark themes rather than colour parameters, so
@@ -99,8 +103,6 @@ jobs:
           plugin_achievements: yes
           plugin_achievements_threshold: B
           plugin_achievements_display: compact
-          plugin_notable: yes
-          plugin_notable_types: commit
           plugin_stargazers: yes
           plugin_stargazers_charts: yes
           extras_css: |
@@ -112,6 +114,23 @@ jobs:
             .calendar-graph-day-L2 { fill: #FFD37A; }
             .calendar-graph-day-L3 { fill: #FFB000; }
             .calendar-graph-day-L4 { fill: #FF8A00; }
+
+      - name: Confirm both dashboards were actually written
+        # The render steps report success even when they produce no file, which
+        # previously let a broken run publish an empty directory and look green.
+        if: steps.gate.outputs.enabled == 'true'
+        run: |
+          ls -la dist 2>/dev/null || true
+          missing=0
+          for f in dist/metrics-dark.svg dist/metrics-light.svg; do
+            if [ ! -s "$f" ]; then
+              echo "::error::$f was not produced by the metrics render step."
+              missing=1
+            else
+              echo "ok  $f  $(stat -c%s "$f") bytes"
+            fi
+          done
+          exit $missing
 
       - name: Publish to output branch
         if: steps.gate.outputs.enabled == 'true'
