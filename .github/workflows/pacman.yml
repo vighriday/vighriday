@@ -19,13 +19,44 @@ jobs:
     name: generate and publish
     runs-on: ubuntu-latest
     steps:
-      - name: Generate Pac-Man graph in both themes
+      - name: Generate Pac-Man graph
+        # Note: unlike Platane/snk, this action has no `outputs` input. Its only
+        # inputs are github_user_name, github_token, games, player_style and
+        # hide_month_labels; anything else is silently ignored. It writes its own
+        # filenames into the workspace, so the next step normalises them.
         uses: abozanona/pacman-contribution-graph@7332e1de7903ab780c3692a4127a59cc13872daa # v5.3.2
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/pacman-light.svg?gameTheme=github
-            dist/pacman-dark.svg?gameTheme=github-dark
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          games: pacman
+          player_style: opportunistic
+
+      - name: Normalise output filenames
+        # Discover whatever the action produced rather than assuming a name, so
+        # an upstream rename degrades to a clear error instead of a silent
+        # "success" that publishes nothing.
+        run: |
+          echo "--- SVGs produced ---"
+          find . -name '*.svg' -not -path './.git/*' -newermt '-10 minutes' -print
+
+          mkdir -p dist
+          dark=$(find . -name '*pacman*dark*.svg' -not -path './dist/*' | head -1)
+          light=$(find . -name '*pacman*.svg' -not -path './dist/*' ! -name '*dark*' | head -1)
+
+          if [ -z "$dark" ] && [ -z "$light" ]; then
+            echo "::error::The Pac-Man action produced no SVG. Its output filenames may have changed upstream."
+            exit 1
+          fi
+          # Fall back to whichever variant exists so one missing theme does not
+          # leave a dead <picture> source on the profile.
+          [ -n "$dark" ]  || dark="$light"
+          [ -n "$light" ] || light="$dark"
+
+          cp "$dark"  dist/pacman-dark.svg
+          cp "$light" dist/pacman-light.svg
+          echo "dark  <- $dark"
+          echo "light <- $light"
+          ls -la dist
 
       - name: Publish to output branch
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
