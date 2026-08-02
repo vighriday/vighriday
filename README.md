@@ -44,17 +44,16 @@
 
 <div align="center">
 
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=0:0B0906,50:FF8A00,100:FFB000&height=180&section=header&text=HRIDAY%20VIG&fontSize=54&fontColor=FFE9BE&fontAlignY=34&animation=fadeIn&desc=Software%20Engineer%20%C2%B7%20AI%20Systems%20Builder%20%C2%B7%20Cloud%20Native&descAlignY=55&descSize=15">
-    <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FFFBF2,50:FFD37A,100:FF8A00&height=180&section=header&text=HRIDAY%20VIG&fontSize=54&fontColor=241802&fontAlignY=34&animation=fadeIn&desc=Software%20Engineer%20%C2%B7%20AI%20Systems%20Builder%20%C2%B7%20Cloud%20Native&descAlignY=55&descSize=15" alt="Animated amber wave banner reading Hriday Vig, Software Engineer, AI Systems Builder, Cloud Native" width="830">
-  </picture>
-
   <img src="assets/hero-crt.svg" alt="Amber CRT terminal panel that types four rotating lines describing Hriday's work" width="830">
 
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=17&duration=2800&pause=900&color=FFB000&center=true&vCenter=true&width=830&height=44&lines=currently%3A+Veris+%E2%80%94+MCP-native+reliability+for+coding+agents;currently%3A+Pulse+%E2%80%94+human-in-the-loop+agent+orchestration;currently%3A+Scrybe+AI+%E2%80%94+AI-native+market+intelligence;first+place+%E2%80%94+IBM+SkillsBuild+x+BeMyApp+AI+Builders+Challenge">
-    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=17&duration=2800&pause=900&color=FF8A00&center=true&vCenter=true&width=830&height=44&lines=currently%3A+Veris+%E2%80%94+MCP-native+reliability+for+coding+agents;currently%3A+Pulse+%E2%80%94+human-in-the-loop+agent+orchestration;currently%3A+Scrybe+AI+%E2%80%94+AI-native+market+intelligence;first+place+%E2%80%94+IBM+SkillsBuild+x+BeMyApp+AI+Builders+Challenge" alt="Typing animation cycling through Hriday's current projects and achievements" width="830">
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=17&duration=2800&pause=900&color=FFB000&center=true&vCenter=true&width=830&height=44&lines=currently%3A+Veris+%E2%80%94+MCP-native+reliability+for+coding+agents;currently%3A+Pulse+%E2%80%94+human-in-the-loop+agent+orchestration;currently%3A+Scrybe+AI+%E2%80%94+AI-native+market+intelligence;generative+AI+%C2%B7+agent+systems+%C2%B7+evaluation+%C2%B7+reliability">
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=17&duration=2800&pause=900&color=FF8A00&center=true&vCenter=true&width=830&height=44&lines=currently%3A+Veris+%E2%80%94+MCP-native+reliability+for+coding+agents;currently%3A+Pulse+%E2%80%94+human-in-the-loop+agent+orchestration;currently%3A+Scrybe+AI+%E2%80%94+AI-native+market+intelligence;generative+AI+%C2%B7+agent+systems+%C2%B7+evaluation+%C2%B7+reliability" alt="Typing animation cycling through Hriday's current projects and focus areas" width="830">
   </picture>
+
+  <a href="https://github.com/vighriday/offside-june-2026"><img src="https://img.shields.io/badge/1st_place-IBM_SkillsBuild_%C3%97_BeMyApp_AI_Builders_Challenge_2026-FFB000?style=for-the-badge&labelColor=0B0906" alt="First place, IBM SkillsBuild and BeMyApp AI Builders Challenge 2026"></a>
+
+  <br>
 
   <a href="https://github.com/vighriday"><img src="https://komarev.com/ghpvc/?username=vighriday&style=for-the-badge&color=FFB000&label=PROFILE+VIEWS" alt="Number of times this profile has been viewed"></a>
   <a href="https://github.com/vighriday?tab=followers"><img src="https://img.shields.io/github/followers/vighriday?style=for-the-badge&color=FFB000&labelColor=0B0906&logo=github&label=FOLLOWERS" alt="GitHub follower count"></a>
@@ -70,30 +69,28 @@
 <table>
   <tr>
     <td width="45%" valign="top">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="assets/ascii-portrait-shimmer.svg">
-        <img src="assets/ascii-portrait-scanline.svg" alt="Photograph of Hriday Vig rendered as animated amber ASCII art inside a CRT frame" width="370">
-      </picture>
+      <img src="assets/ascii-portrait-scanline.svg" alt="Photograph of Hriday Vig rendered as animated amber ASCII art inside a CRT frame" width="370">
     </td>
     <td width="55%" valign="top">
       <h3><code>hriday@crt</code> ~ %</h3>
       <table>
-        <tr><td><b>role</b></td><td>Software Engineer &amp; AI Systems Builder</td></tr>
+        <tr><td><b>role</b></td><td>AI Product Manager</td></tr>
         <tr><td><b>location</b></td><td>New Delhi, India</td></tr>
         <tr><td><b>education</b></td><td>B.Tech CSE, MSIT &middot; GGSIPU &middot; 2024&ndash;2028 &middot; CGPA 8.87/10</td></tr>
         <tr><td><b>uptime</b></td><td>Shipping production systems since 2025</td></tr>
         <tr><td><b>shell</b></td><td>Python &middot; TypeScript &middot; JavaScript &middot; SQL</td></tr>
         <tr><td><b>cloud</b></td><td>Azure &middot; Azure Functions &middot; Docker &middot; GitHub Actions</td></tr>
-        <tr><td><b>focus</b></td><td>AI agents &middot; MCP &middot; evaluation &middot; reliability &middot; observability</td></tr>
+        <tr><td><b>focus</b></td><td>Generative AI &middot; AI agents &middot; MCP &middot; evaluation &middot; reliability</td></tr>
         <tr><td><b>running</b></td><td>Veris &middot; Pulse &middot; Scrybe AI</td></tr>
         <tr><td><b>shipped</b></td><td><a href="https://www.npmjs.com/package/veris-core">veris-core</a> on npm and the official MCP Registry</td></tr>
+        <tr><td><b>award</b></td><td>1st place &mdash; IBM SkillsBuild &times; BeMyApp AI Builders Challenge, 2026</td></tr>
       </table>
       <p>
-        I design, develop, test, and ship software end-to-end &mdash; stakeholder
-        requirements through full-stack apps, REST APIs, Azure deployments, and
-        AI-native developer tooling. My work centres on making autonomous systems
-        <b>accountable</b>: behavioural risk assessment, evaluation harnesses,
-        human-in-the-loop supervision, and explainable multi-agent reasoning.
+        I take generative AI products from problem statement to production &mdash;
+        scoping with stakeholders, shaping the system, and shipping it. My work
+        centres on making generative AI and agent systems <b>accountable</b>:
+        behavioural risk assessment, evaluation harnesses, human-in-the-loop
+        supervision, and explainable multi-agent reasoning.
       </p>
       <p><i>Evidence before prediction. Verification before shipping.</i></p>
     </td>
@@ -102,7 +99,7 @@
 
 <div align="center"><img src="assets/signature-divider.svg" alt="Animated amber oscilloscope divider" width="830"></div>
 
-## Stack
+## Hands on
 
 <div align="center">
 
@@ -120,6 +117,8 @@
 
   <br>
 
+  <img src="https://img.shields.io/badge/Generative_AI-FFB000?style=for-the-badge&labelColor=0B0906" alt="Generative AI">
+  <img src="https://img.shields.io/badge/AI_Agents-FFB000?style=for-the-badge&labelColor=0B0906" alt="AI agents">
   <img src="https://img.shields.io/badge/Model_Context_Protocol-FFB000?style=for-the-badge&labelColor=0B0906" alt="Model Context Protocol">
   <img src="https://img.shields.io/badge/Multi--Agent_Systems-FFB000?style=for-the-badge&labelColor=0B0906" alt="Multi-agent systems">
   <img src="https://img.shields.io/badge/LLM_Evaluation-FFB000?style=for-the-badge&labelColor=0B0906" alt="LLM evaluation and evals">
@@ -254,25 +253,23 @@ archive, or 404. See <a href="scripts/gh_charts.py">scripts/gh_charts.py</a>.
 </div>
 
 <details>
-  <summary><b>More stats</b> &mdash; language depth, repository breakdown, and productive hours</summary>
-  <br>
-  <div align="center">
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=vighriday&theme=gruvbox#gh-dark-mode-only" alt="Detailed profile summary card, dark mode" width="830">
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=vighriday&theme=github#gh-light-mode-only" alt="Detailed profile summary card, light mode" width="830">
-    <br>
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=vighriday&theme=gruvbox#gh-dark-mode-only" alt="Repositories per language, dark mode" height="200">
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=vighriday&theme=github#gh-light-mode-only" alt="Repositories per language, light mode" height="200">
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=vighriday&theme=gruvbox#gh-dark-mode-only" alt="Most committed language, dark mode" height="200">
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=vighriday&theme=github#gh-light-mode-only" alt="Most committed language, light mode" height="200">
-    <br>
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=vighriday&theme=gruvbox&utcOffset=5.5#gh-dark-mode-only" alt="Commits by time of day, dark mode" width="420">
-    <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=vighriday&theme=github&utcOffset=5.5#gh-light-mode-only" alt="Commits by time of day, light mode" width="420">
-  </div>
+  <summary><b>Coding time</b> &mdash; weekly language breakdown from WakaTime</summary>
+
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
+
 </details>
 
 <div align="center"><img src="assets/signature-divider.svg" alt="Animated amber oscilloscope divider" width="830"></div>
 
 ## Contribution art
+
+<blockquote>
+Generated from my real contribution graph by scheduled GitHub Actions
+(<code>snake.yml</code>, <code>pacman.yml</code>, <code>3d-contrib.yml</code>),
+published to the <code>output</code> branch, and re-rendered daily. Each one
+shows a themed placeholder until its workflow has run.
+</blockquote>
 
 <div align="center">
   <picture>
@@ -320,39 +317,6 @@ archive, or 404. See <a href="scripts/gh_charts.py">scripts/gh_charts.py</a>.
 
 <div align="center"><img src="assets/signature-divider.svg" alt="Animated amber oscilloscope divider" width="830"></div>
 
-## Signal
-
-### Writing
-
-<!-- BLOG-POST-LIST:START -->
-- No feed connected yet. Point `blog-posts.yml` at an RSS URL and the five most recent posts land here automatically. See [SETUP.md](SETUP.md#5-dynamic-feeds).
-<!-- BLOG-POST-LIST:END -->
-
-### Recent activity
-
-<!--START_SECTION:activity-->
-1. Waiting for the first `activity.yml` run. It rewrites this block every 12 hours.
-<!--END_SECTION:activity-->
-
-<details>
-  <summary><b>Optional integrations</b> &mdash; WakaTime, Spotify, and coding profiles</summary>
-  <br>
-
-  **WakaTime** &mdash; weekly coding breakdown, updated daily once `WAKATIME_API_KEY` is set.
-
-  <!--START_SECTION:waka-->
-  Add the `WAKATIME_API_KEY` repository secret and run `wakatime.yml` once. Full walkthrough in [SETUP.md](SETUP.md#wakatime).
-  <!--END_SECTION:waka-->
-
-  **Spotify, LeetCode, chess, and pinned-gist widgets** are deliberately opt-in.
-  Each one is a live third-party dependency on a page that is otherwise
-  self-contained, so none of them ship enabled. Complete, non-breaking setup
-  paths for all of them live in [SETUP.md](SETUP.md#optional-integrations).
-
-</details>
-
-<div align="center"><img src="assets/signature-divider.svg" alt="Animated amber oscilloscope divider" width="830"></div>
-
 ## Credentials
 
 <table>
@@ -394,8 +358,6 @@ archive, or 404. See <a href="scripts/gh_charts.py">scripts/gh_charts.py</a>.
 
   <img src="assets/quote-card.svg" alt="Quote of the day, refreshed daily by the refresh workflow" width="830">
 
-  <img src="assets/profile-signal.svg" alt="Pipeline status strip showing when the profile assets were last refreshed" width="830">
-
   <br>
 
   <a href="https://www.linkedin.com/in/hridayvig"><img src="https://img.shields.io/badge/LinkedIn-FFB000?style=for-the-badge&logo=linkedin&logoColor=0B0906&labelColor=0B0906" alt="Hriday Vig on LinkedIn"></a>
@@ -404,9 +366,8 @@ archive, or 404. See <a href="scripts/gh_charts.py">scripts/gh_charts.py</a>.
   <a href="https://www.npmjs.com/package/veris-core"><img src="https://img.shields.io/badge/npm-FFB000?style=for-the-badge&logo=npm&logoColor=0B0906&labelColor=0B0906" alt="veris-core on npm"></a>
   <a href="SETUP.md"><img src="https://img.shields.io/badge/How_this_page_is_built-FFB000?style=for-the-badge&labelColor=0B0906" alt="SETUP.md, how this profile is built"></a>
 
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=0:FFB000,50:FF8A00,100:0B0906&height=140&section=footer&text=build%20deliberately%20%C2%B7%20verify%20relentlessly&fontSize=17&fontColor=FFE9BE&fontAlignY=78">
-    <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF8A00,50:FFD37A,100:FFFBF2&height=140&section=footer&text=build%20deliberately%20%C2%B7%20verify%20relentlessly&fontSize=17&fontColor=241802&fontAlignY=78" alt="Animated amber wave footer reading build deliberately, verify relentlessly" width="830">
-  </picture>
+  <img src="assets/signature-divider.svg" alt="Animated amber oscilloscope divider" width="830">
+
+  <sub>Build deliberately &middot; verify relentlessly &middot; ship with evidence</sub>
 
 </div>

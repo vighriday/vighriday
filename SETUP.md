@@ -126,7 +126,6 @@ finishing in the same minute would race and one would lose its push.
 |------|------|--------------|---------------|
 | `METRICS_TOKEN` | Secret | `metrics.yml` only | [Classic PAT](https://github.com/settings/tokens/new?scopes=public_repo,read:user) with `public_repo` + `read:user` |
 | `WAKATIME_API_KEY` | Secret | `wakatime.yml` | <https://wakatime.com/settings/api-key> |
-| `BLOG_FEED_URLS` | **Variable** | `blog-posts.yml` | Your RSS URL(s), comma-separated |
 
 `GITHUB_TOKEN` is provided automatically — never create it yourself.
 
@@ -158,28 +157,13 @@ Until the secret exists, `wakatime.yml` logs a notice and exits cleanly.
 
 ---
 
-## 5. Dynamic feeds
+## 5. Dynamic content
 
-### Blog posts
+Only WakaTime remains, collapsed under *Telemetry*. The blog-post and
+recent-activity feeds were removed: with no RSS feed configured they published
+nothing but a "pending" placeholder onto a public profile, and the contribution
+graph already covers recent activity.
 
-Set the repository **variable** `BLOG_FEED_URLS`, for example:
-
-```
-https://yoursite.com/rss.xml,https://dev.to/feed/vighriday,https://medium.com/feed/@vighriday
-```
-
-`blog-posts.yml` runs every 6 hours and rewrites the block between
-`<!-- BLOG-POST-LIST:START -->` and `<!-- BLOG-POST-LIST:END -->`. **Never
-delete those comments** — they are the only thing telling the updater where to
-write. `verify_readme.py` fails the build if a `START` marker loses its `END`.
-
-With no variable set, the workflow exits without touching the README, so the
-"no feed connected yet" placeholder stays.
-
-### Recent activity
-
-`activity.yml` needs nothing. It rewrites the `START_SECTION:activity` block
-every 12 hours from your public event feed.
 
 ---
 
@@ -195,9 +179,7 @@ output branch, and the rest fill in around it.
 4. **pacman**
 5. **3d-contrib**
 6. **metrics** — only after `METRICS_TOKEN` exists
-7. **activity**
-8. **blog-posts** — only after `BLOG_FEED_URLS` exists
-9. **wakatime** — only after `WAKATIME_API_KEY` exists
+8. **wakatime** — only after `WAKATIME_API_KEY` exists
 
 `ascii-regen` runs by itself whenever you push a new `assets/portrait-source.png`.
 
@@ -214,8 +196,6 @@ behind each other on the output branch:
 | `metrics` | `47 3 * * *` |
 | `refresh` | `17 4 * * *` |
 | `wakatime` | `47 4 * * *` |
-| `blog-posts` | `7 */6 * * *` |
-| `activity` | `23 */12 * * *` |
 
 > GitHub deprioritises scheduled workflows on busy runners; a cron can drift by
 > 10–30 minutes. That is normal and not a failure.
@@ -433,12 +413,12 @@ signal without any of them.
 
 | Service | If it dies | Self-hosted alternative |
 |---------|-----------|-------------------------|
-| github-readme-stats | Stats, top-langs and pin cards 404 | `scripts/gh_charts.py` already renders the language mix. Or self-deploy the upstream to Vercel |
+| github-readme-stats | **Removed** — returned 503 for every card | Replaced by self-hosted `stats-card.svg`, `language-bars.svg` and `repo-pins.svg` |
 | streak-stats | Streak card 404s | Derivable from the contributions calendar `gh_charts.py` already fetches |
 | github-readme-activity-graph | Activity chart 404s | `assets/oscilloscope.svg` covers the same data over a longer window |
-| capsule-render | Wave header and footer go blank | `assets/hero-crt.svg`, already on the page |
+| capsule-render | **Removed** — emitted `stroke="#none"` and a gradient that rendered as a black bar | `assets/hero-crt.svg` does the job better and is self-hosted |
 | readme-typing-svg | Typing line goes blank | `assets/hero-crt.svg` types natively, in pure CSS |
-| github-profile-trophy | Trophy shelf 404s | Delete the two lines; nothing else depends on it |
+| github-profile-trophy | **Removed** — returned 402 Payment Required | Replaced by self-hosted `achievements.svg` |
 | skillicons.dev | Stack icons 404 | Replace with shields.io badges, already used for the rest of the stack |
 | Platane/snk | Snake 404s | `assets/snake-placeholder.svg` shows instead |
 

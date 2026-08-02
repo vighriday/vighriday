@@ -45,7 +45,7 @@ UTC_OFFSET = 5.5
 #: Identity. Kept beside the palette so one file drives every generated string.
 USERNAME = "vighriday"
 DISPLAY_NAME = "Hriday Vig"
-TAGLINE = "Software Engineer / AI Systems Builder / Cloud Native"
+TAGLINE = "AI PRODUCT MANAGER  ·  GENERATIVE AI  ·  CLOUD NATIVE"
 
 #: Branch that GitHub Actions publishes generated assets to.
 OUTPUT_BRANCH = "output"

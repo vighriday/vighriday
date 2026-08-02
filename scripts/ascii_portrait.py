@@ -446,9 +446,14 @@ def build_svg(
 
     anim_css = ""
     if animation == "scanline":
+        # The reveal runs ONCE and holds (`forwards`); only the beam loops.
+        # An infinite reveal spends part of every cycle at opacity 0, which on a
+        # profile page means visitors periodically see a black rectangle where
+        # the portrait should be. The image reloads on each page view, so the
+        # boot-up still plays every time someone lands on the profile.
         anim_css = (
-            ".r{opacity:0;animation:rv 9s linear infinite}"
-            "@keyframes rv{0%{opacity:0}5%{opacity:1}94%{opacity:1}100%{opacity:0}}"
+            ".r{opacity:0;animation:rv .55s ease-out forwards}"
+            "@keyframes rv{from{opacity:0}to{opacity:1}}"
             ".beam{animation:sweep 9s linear infinite}"
             f"@keyframes sweep{{0%{{transform:translateY(0);opacity:0}}"
             f"4%{{opacity:.85}}55%{{opacity:.5}}"

@@ -27,6 +27,7 @@ from theme import (  # noqa: E402
     DISPLAY_NAME,
     MONO_STACK,
     SANS_STACK,
+    TAGLINE,
     THEME,
     css_vars,
 )
@@ -35,9 +36,9 @@ WIDTH = 830  # the widest anything on the page is allowed to be
 
 # Phrases cycled by the hero's terminal typing animation.
 HERO_LINES = (
-    "I design, build, test, and ship software end-to-end.",
-    "MCP-native reliability for AI coding agents.",
-    "Explainable multi-agent systems over black boxes.",
+    "AI product manager. I scope it, build it, and ship it.",
+    "Generative AI and agent systems, made accountable.",
+    "From problem statement to production, end to end.",
     "Evidence before prediction. Verification before shipping.",
 )
 
@@ -212,7 +213,7 @@ def hero(width: int = WIDTH, lines: tuple[str, ...] = HERO_LINES) -> str:
         + f'<rect width="{width}" height="{height}" rx="16" fill="var(--bg)"/>'
         + '<g class="screen">'
         + f'<text class="name" x="{prompt_x}" y="76">{html.escape(DISPLAY_NAME)}</text>'
-        + f'<text class="tag" x="{prompt_x + 2}" y="102">SOFTWARE ENGINEER &#183; AI SYSTEMS BUILDER &#183; CLOUD NATIVE</text>'
+        + f'<text class="tag" x="{prompt_x + 2}" y="102">{html.escape(TAGLINE)}</text>'
         + f'<rect x="{prompt_x}" y="116" width="240" height="2" fill="url(#hglowline)"/>'
         + f'<text class="ps1" x="{prompt_x}" y="{base_y:g}">&#187;</text>'
         + "".join(bodies)
