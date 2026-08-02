@@ -76,7 +76,7 @@
       <table>
         <tr><td><b>role</b></td><td>AI Product Manager</td></tr>
         <tr><td><b>location</b></td><td>New Delhi, India</td></tr>
-        <tr><td><b>education</b></td><td>B.Tech CSE, MSIT &middot; GGSIPU &middot; 2024&ndash;2028 &middot; CGPA 8.87/10</td></tr>
+        <tr><td><b>education</b></td><td>B.Tech CSE, MSIT &middot; GGSIPU &middot; 2024&ndash;2028</td></tr>
         <tr><td><b>uptime</b></td><td>Shipping production systems since 2025</td></tr>
         <tr><td><b>shell</b></td><td>Python &middot; TypeScript &middot; JavaScript &middot; SQL</td></tr>
         <tr><td><b>cloud</b></td><td>Azure &middot; Azure Functions &middot; Docker &middot; GitHub Actions</td></tr>
@@ -206,9 +206,8 @@
     <td width="50%" valign="top">
       <h3>Maharaja Surajmal Institute of Technology</h3>
       <b>B.Tech, Computer Science Engineering</b> &middot; 2024 &ndash; 2028
-      <p>GGSIPU, New Delhi. CGPA 8.87/10. Coursework in data structures,
-      database systems, operating systems, computer networks, and software
-      engineering.</p>
+      <p>GGSIPU, New Delhi. Coursework in data structures, database systems,
+      operating systems, computer networks, and software engineering.</p>
     </td>
   </tr>
 </table>
