@@ -58,7 +58,7 @@
   <a href="https://github.com/vighriday"><img src="https://komarev.com/ghpvc/?username=vighriday&style=for-the-badge&color=FFB000&label=PROFILE+VIEWS" alt="Number of times this profile has been viewed"></a>
   <a href="https://github.com/vighriday?tab=followers"><img src="https://img.shields.io/github/followers/vighriday?style=for-the-badge&color=FFB000&labelColor=0B0906&logo=github&label=FOLLOWERS" alt="GitHub follower count"></a>
   <a href="https://github.com/vighriday?tab=repositories"><img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fraw.githubusercontent.com%2Fvighriday%2Fvighriday%2Foutput%2Fstars.json" alt="Total stars across all public repositories, refreshed daily"></a>
-  <a href="https://www.npmjs.com/package/veris-core"><img src="https://img.shields.io/npm/dt/veris-core?style=for-the-badge&color=FFB000&labelColor=0B0906&logo=npm&logoColor=white&label=VERIS+INSTALLS" alt="Total npm downloads for the veris-core package"></a>
+  <a href="https://www.npmjs.com/package/veris-core"><img src="https://img.shields.io/npm/dm/veris-core?style=for-the-badge&color=FFB000&labelColor=0B0906&logo=npm&logoColor=white&label=VERIS+DOWNLOADS" alt="Monthly npm downloads for the veris-core package"></a>
 
   <img src="assets/signature-divider.svg" alt="Animated amber oscilloscope divider" width="830">
 
