@@ -246,6 +246,19 @@
   <summary><b>Coding time</b> &mdash; weekly language breakdown from WakaTime</summary>
 
 <!--START_SECTION:waka-->
+
+```txt
+From: 26 July 2026 - To: 02 August 2026
+
+Total Time: 37 mins
+
+Text         24 mins         >>>>>>>>>>>>=============   47.63 %
+Other        13 mins         >>>>>>>==================   26.22 %
+Markdown     8 mins          >>>>=====================   17.56 %
+Kotlin       3 mins          >>=======================   06.35 %
+PowerShell   1 min           >========================   02.24 %
+```
+
 <!--END_SECTION:waka-->
 
 </details>
