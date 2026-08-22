@@ -248,16 +248,16 @@
 <!--START_SECTION:waka-->
 
 ```txt
-From: 13 August 2026 - To: 20 August 2026
+From: 14 August 2026 - To: 21 August 2026
 
-Total Time: 28 hrs 58 mins
+Total Time: 25 hrs 29 mins
 
-Markdown      8 hrs 26 mins   >>>>>>>==================   27.63 %
-Kotlin        4 hrs 34 mins   >>>>=====================   14.97 %
-TypeScript    4 hrs 25 mins   >>>>=====================   14.46 %
-JavaScript    3 hrs 53 mins   >>>======================   12.75 %
-Python        2 hrs 31 mins   >>=======================   08.24 %
-C#            1 hr 44 mins    >========================   05.68 %
+Markdown      7 hrs 21 mins   >>>>>>>==================   27.35 %
+TypeScript    4 hrs 23 mins   >>>>=====================   16.32 %
+JavaScript    3 hrs 53 mins   >>>>=====================   14.49 %
+Kotlin        2 hrs 58 mins   >>>======================   11.07 %
+Python        2 hrs 28 mins   >>=======================   09.18 %
+C#            1 hr 44 mins    >>=======================   06.45 %
 ```
 
 <!--END_SECTION:waka-->
