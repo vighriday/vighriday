@@ -14,19 +14,20 @@ assert.doesNotMatch(readme, /<(?:script|iframe|style|canvas|input)\b/i, 'Unsuppo
 const images = [...readme.matchAll(/<img\b([^>]*)>/g)];
 const expectedImages = ['assets/header.svg', 'assets/project-veris.svg', 'assets/project-hive.svg', 'assets/project-offside.svg', 'assets/activity.svg', 'assets/game-preview.svg'];
 assert.equal(images.length, expectedImages.length, 'One portrait header, three project studies, one activity chart, and one game poster.');
-assert.deepEqual(images.map(([, attributes]) => attributes.match(/\bsrc="([^"]+)"/)?.[1]), expectedImages, 'Keep each illustration purposeful and in reading order.');
+assert.deepEqual(images.map(([, attributes]) => attributes.match(/\bsrc="([^"]+)"/)?.[1]?.split('?')[0]), expectedImages, 'Keep each illustration purposeful and in reading order.');
 for (const [, attributes] of images) {
   const source = attributes.match(/\bsrc="([^"]+)"/)?.[1];
   assert.ok(source && !/^https?:|^\/\//i.test(source), 'Image dependencies must be repository assets.');
   assert.ok(/\balt="[^"]{12,}"/.test(attributes), 'Images need meaningful alternative text.');
   assert.ok(/\bwidth="960"/.test(attributes));
-  await access(resolve(root, source));
+  await access(resolve(root, source.split('?')[0]));
 }
 for (const image of expectedImages) {
   const contents = await read(image);
   const viewBox = contents.match(/viewBox="0 0 (\d+) (\d+)"/);
   assert.ok(/<svg\b/.test(contents) && viewBox && Number(viewBox[1]) >= 800 && Number(viewBox[2]) <= 400);
   assert.doesNotMatch(contents, /<(?:script|foreignObject|animate|animateTransform)\b|@import|onload=|javascript:|url\(\s*https?:|(?:href|src)="https?:/i);
+  assert.doesNotMatch(contents, /NaN|Infinity|undefined/, 'SVG geometry must contain only valid coordinates.');
   assert.ok(Buffer.byteLength(contents) < 100_000, 'SVG assets should stay below 100 KB.');
 }
 const snapshot = validateSnapshot(JSON.parse(await read('data/activity.json')));

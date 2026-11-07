@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import opentype from 'opentype.js';
 import { palette, width, svgDocument } from '../src/theme.mjs';
+import { serializePath } from '../src/lettering.mjs';
 
 const height = 164;
 const bytes = await readFile(new URL('../fonts/Manrope-Light.ttf', import.meta.url));
@@ -13,7 +14,7 @@ function lettering(text, x, y, size, fill, tracking = 0) {
   assert.ok(bounds.x1 >= 38 && bounds.x2 <= 550, `Horizontal lettering bounds: ${text}`);
   assert.ok(bounds.y1 >= 23 && bounds.y2 <= 136, `Vertical lettering bounds: ${text}`);
   return font.getPaths(text, x, y, size, options)
-    .map(glyph => `<path fill="${fill}" d="${glyph.toPathData({ decimalPlaces: 2, flipY: false, optimize: false })}"/>`)
+    .map(glyph => `<path fill="${fill}" d="${serializePath(glyph)}"/>`)
     .join('');
 }
 
@@ -113,6 +114,7 @@ for (const project of projects) {
   const image = svgDocument({ height, title: project.name, description: project.description, body });
   assert.ok(Buffer.byteLength(image) < 100_000, `Project banner must remain below 100 KB: ${project.id}`);
   assert.ok(!/<(?:script|foreignObject|text|animate)\b/.test(image), 'Project banners must be self-contained, outlined, and static.');
+  assert.doesNotMatch(image, /NaN|Infinity|undefined/, 'Every project glyph must have valid coordinates.');
   const file = new URL(`../assets/project-${project.id}.svg`, import.meta.url);
   if (process.argv.includes('--check')) {
     assert.equal(await readFile(file, 'utf8'), image, `Run node scripts/render-projects.mjs to refresh assets/project-${project.id}.svg.`);

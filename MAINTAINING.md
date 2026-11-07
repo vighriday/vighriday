@@ -17,6 +17,8 @@ npm run verify
 
 The header retains the original profile portrait as vector cells. Its 64-by-46 tonal map is in `src/portrait.json`; it does not fetch a photograph or depend on system block-character fonts. The three selected-work illustrations share a frame, while their diagrams reference evidence sheets, agent connections, and a football decision. Keep the project descriptions and links in native Markdown beneath the artwork.
 
+Font paths use the finite-coordinate exporter in `src/lettering.mjs`. The font library's decimal formatter can emit `NaN` for near-integer values and silently drop parts of letters. Regression tests cover the affected glyphs, and verification rejects invalid coordinates in every generated SVG.
+
 ## What the chart measures
 
 `data/activity.json` records exactly 90 completed UTC dates ending yesterday, every explicit daily count, their sum, the number of active days, the peak daily count, and the successful fetch timestamp. The source is GitHub's **publicly visible profile contribution calendar**. Counts follow GitHub's contribution rules; they are not commit counts, coding hours, proficiency, or a productivity score. Anonymized private activity is included only if GitHub already exposes it on the public profile.

@@ -1,6 +1,6 @@
 <p>
   <a href="https://hridayvig.xyz/">
-    <img src="assets/header.svg" alt="Hriday Vig. Ideas, with follow-through. His original portrait, rebuilt in paper-coloured pixels." width="960">
+    <img src="assets/header.svg?v=readable-type" alt="Hriday Vig. Ideas, with follow-through. His original portrait, rebuilt in paper-coloured pixels." width="960">
   </a>
 </p>
 

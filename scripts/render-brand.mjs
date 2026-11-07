@@ -2,8 +2,9 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import opentype from 'opentype.js';
 import { palette, width, svgDocument } from '../src/theme.mjs';
+import { serializePath } from '../src/lettering.mjs';
 
-const height = 304;
+const height = 336;
 const file = new URL('../assets/header.svg', import.meta.url);
 const fontFiles = {
   sans: new URL('../fonts/Manrope-Light.ttf', import.meta.url),
@@ -24,10 +25,10 @@ function lettering(font, text, x, y, size, fill, letterSpacing = 0) {
   const options = { kerning: true, letterSpacing };
   const path = fonts[font].getPath(text, x, y, size, options);
   bounds.push({ text, ...path.getBoundingBox() });
-  // Preserve glyph contours independently. A merged path can change how open
-  // contours fill in SVG renderers; v2 also requires explicit SVG options.
+  // Preserve glyph contours and serialize finite, rounded coordinates directly.
+  // The font library's decimal formatter can turn near-integer floats into NaN.
   return fonts[font].getPaths(text, x, y, size, options)
-    .map(glyph => `<path fill="${fill}" d="${glyph.toPathData({ decimalPlaces: 2, flipY: false, optimize: false })}"/>`)
+    .map(glyph => `<path fill="${fill}" stroke="${fill}" stroke-width="${size >= 40 ? .3 : .1}" stroke-linejoin="round" paint-order="stroke fill" d="${serializePath(glyph)}"/>`)
     .join('');
 }
 
@@ -46,12 +47,12 @@ portrait.rows.forEach((row, rowIndex) => {
 const pixelPortrait = pixels.map((path, level) => path.length ? `<path fill="${palette.paper}" opacity="${[0, .19, .43, .72, 1][level]}" d="${path.join('')}"/>` : '').join('');
 
 const nameSize = 82;
-const nameOptions = { kerning: true, letterSpacing: -.055 };
+const nameOptions = { kerning: true, letterSpacing: -.01 };
 const surnameX = 38 + fonts.sans.getAdvanceWidth('Hriday ', nameSize, nameOptions);
-const name = lettering('sans', 'Hriday ', 38, 106, nameSize, palette.paper, -.055)
-  + lettering('sans', 'Vig.', surnameX, 106, nameSize, palette.acid, -.055);
-const idea = lettering('sans', 'Ideas, with', 40, 177, 50, palette.paper, -.045);
-const followThrough = lettering('serif', 'follow-through.', 119, 252, 82, palette.red, -.027);
+const name = lettering('sans', 'Hriday ', 38, 100, nameSize, palette.paper, nameOptions.letterSpacing)
+  + lettering('sans', 'Vig.', surnameX, 100, nameSize, palette.acid, nameOptions.letterSpacing);
+const idea = lettering('sans', 'Ideas, with', 40, 183, 50, palette.paper);
+const followThrough = lettering('serif', 'follow-through.', 100, 274, 82, palette.red);
 const portraitCaption = lettering('sans', 'A FEW PIXELS. A WHOLE PERSON.', 687, 287, 10, palette.muted, .035);
 
 const defs = `
@@ -60,7 +61,7 @@ const defs = `
 
 const body = `
   <rect width="${width}" height="${height}" fill="url(#grid)"/>
-  <path d="M40 24H920M40 280H920" stroke="url(#rule)" stroke-width=".7"/>
+  <path d="M40 24H920M40 312H920" stroke="url(#rule)" stroke-width=".7"/>
   <path d="M644 42V262" stroke="${palette.paper}" stroke-width=".6" opacity=".1"/>
   <path d="M678 54V30H702M895 30H919V54M919 240V264H895M702 264H678V240" fill="none" stroke="${palette.paper}" stroke-width=".7" opacity=".34"/>
   <path d="M900 49h5v5h-5zM910 64h3v3h-3zM689 245h4v4h-4z" fill="${palette.acid}"/>
@@ -72,8 +73,10 @@ const body = `
 
 for (const box of bounds.slice(0, 4)) {
   assert.ok(box.x1 >= 32 && box.x2 <= 654, `Lettering outside horizontal safe area: ${box.text}`);
-  assert.ok(box.y1 >= 36 && box.y2 <= 272, `Lettering outside vertical safe area: ${box.text}`);
+  assert.ok(box.y1 >= 36 && box.y2 <= height - 40, `Lettering outside vertical safe area: ${box.text}`);
 }
+assert.ok(bounds[2].y1 - Math.max(bounds[0].y2, bounds[1].y2) >= 24, 'Keep the name and subtitle on clearly separated lines.');
+assert.ok(bounds[3].y1 - bounds[2].y2 >= 24, 'Keep the subtitle clear of the italic lettering.');
 assert.ok(bounds[4].x2 <= 920 && bounds[4].y2 <= 290, 'Portrait caption must stay within its frame.');
 
 const image = svgDocument({
@@ -85,6 +88,7 @@ const image = svgDocument({
 });
 assert.ok(Buffer.byteLength(image) < 100_000, 'The static header must remain below 100 KB.');
 assert.ok(!/<(?:script|foreignObject|text|animate)\b/.test(image), 'Header must remain self-contained, outlined, and static.');
+assert.doesNotMatch(image, /NaN|Infinity|undefined/, 'Every visible glyph must have valid coordinates.');
 
 if (process.argv.includes('--check')) {
   assert.equal(await readFile(file, 'utf8'), image, 'Run node scripts/render-brand.mjs to refresh assets/header.svg.');
