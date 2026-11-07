@@ -16,7 +16,7 @@ export function renderActivity(snapshot) {
   const bars = days.map((day, index) => {
     const height = peakDaily === 0 ? 0 : day.count / peakDaily * chartHeight;
     const fill = day.count === peakDaily && peakDaily > 0 ? palette.acid : palette.paper;
-    return `<rect x="${(x + index * step + 1).toFixed(2)}" y="${(bottom - height).toFixed(2)}" width="${(step - 2).toFixed(2)}" height="${height.toFixed(2)}" fill="${fill}" opacity="${day.count === peakDaily ? 1 : .53}"><title>${escapeXml(day.date)}: ${day.count} contributions</title></rect>`;
+    return `<rect x="${(x + index * step + 1).toFixed(2)}" y="${(bottom - height).toFixed(2)}" width="${(step - 2).toFixed(2)}" height="${height.toFixed(2)}" fill="${fill}" opacity="${day.count === peakDaily ? 1 : .53}"><title>${escapeXml(day.date)}: ${day.count} contribution${day.count === 1 ? '' : 's'}</title></rect>`;
   }).join('\n');
   const stats = [[48, total, 'CONTRIBUTIONS'], [364, activeDays, 'ACTIVE DAYS / 90'], [680, peakDaily, 'PEAK DAILY COUNT']].map(([left, value, label]) => `<text x="${left}" y="80" class="number">${number(value)}</text><text x="${left}" y="103" class="label">${label}</text>`).join('');
   const refreshed = `${date(fetchedAt)} ${fetchedAt.slice(11, 16)}`;
