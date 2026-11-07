@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="164" viewBox="0 0 960 164" role="img" aria-labelledby="title description">
   <title id="title">HIVE</title>
   <desc id="description">An original editorial banner for HIVE. A quiet honeycomb holds a connected network; one red connection emerges between the cells.</desc>
-
+  <defs><style>
+    .trace-intro{stroke-dasharray:320;stroke-dashoffset:0;animation:trace-in 2.2s ease-out 1}
+    @keyframes trace-in{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+    @media(prefers-reduced-motion:reduce){.trace-intro{animation:none}}
+  </style></defs>
   <rect width="960" height="164" fill="#0c0d0b"/>
 
     <path d="M116 31H550M40 153H920M585 31V135" fill="none" stroke="#e8e7df" stroke-width=".7" opacity=".12"/>
@@ -13,7 +17,7 @@
       <path d="M720.00 58.00L705.00 83.98L675.00 83.98L660.00 58.00L675.00 32.02L705.00 32.02Z" opacity=".14"/><path d="M720.00 110.00L705.00 135.98L675.00 135.98L660.00 110.00L675.00 84.02L705.00 84.02Z" opacity=".14"/><path d="M765.00 32.00L750.00 57.98L720.00 57.98L705.00 32.00L720.00 6.02L750.00 6.02Z" opacity=".14"/><path d="M765.00 84.00L750.00 109.98L720.00 109.98L705.00 84.00L720.00 58.02L750.00 58.02Z" opacity=".5"/><path d="M765.00 136.00L750.00 161.98L720.00 161.98L705.00 136.00L720.00 110.02L750.00 110.02Z" opacity=".14"/><path d="M810.00 58.00L795.00 83.98L765.00 83.98L750.00 58.00L765.00 32.02L795.00 32.02Z" opacity=".14"/><path d="M810.00 110.00L795.00 135.98L765.00 135.98L750.00 110.00L765.00 84.02L795.00 84.02Z" opacity=".14"/><path d="M855.00 32.00L840.00 57.98L810.00 57.98L795.00 32.00L810.00 6.02L840.00 6.02Z" opacity=".14"/><path d="M855.00 84.00L840.00 109.98L810.00 109.98L795.00 84.00L810.00 58.02L840.00 58.02Z" opacity=".14"/><path d="M855.00 136.00L840.00 161.98L810.00 161.98L795.00 136.00L810.00 110.02L840.00 110.02Z" opacity=".14"/><path d="M900.00 58.00L885.00 83.98L855.00 83.98L840.00 58.00L855.00 32.02L885.00 32.02Z" opacity=".14"/><path d="M900.00 110.00L885.00 135.98L855.00 135.98L840.00 110.00L855.00 84.02L885.00 84.02Z" opacity=".14"/>
     </g>
     <path d="M690 110L735 84L780 110L825 84L870 58" fill="none" stroke="#e8e7df" stroke-width="1.1" opacity=".38"/>
-    <path d="M735 84L825 32" fill="none" stroke="#ff4d35" stroke-width="1.6"/>
+    <path class="trace-intro" d="M735 84L825 32" fill="none" stroke="#ff4d35" stroke-width="1.6"/>
     <circle cx="735" cy="84" r="4" fill="#c8ff4d"/>
     <circle cx="690" cy="110" r="2.5" fill="#e8e7df" opacity=".6"/>
     <circle cx="780" cy="110" r="2.5" fill="#e8e7df" opacity=".6"/>

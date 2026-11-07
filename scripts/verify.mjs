@@ -28,10 +28,29 @@ for (const image of expectedImages) {
   assert.ok(/<svg\b/.test(contents) && viewBox && Number(viewBox[1]) >= 800 && Number(viewBox[2]) <= 400);
   assert.doesNotMatch(contents, /<(?:script|foreignObject|animate|animateTransform)\b|@import|onload=|javascript:|url\(\s*https?:|(?:href|src)="https?:/i);
   assert.doesNotMatch(contents, /NaN|Infinity|undefined/, 'SVG geometry must contain only valid coordinates.');
+  if (/@keyframes/.test(contents)) {
+    assert.match(contents, /prefers-reduced-motion:reduce/);
+    assert.doesNotMatch(contents, /animation[^;{}]*\binfinite\b/, 'README motion must settle after a brief introduction.');
+  }
   assert.ok(Buffer.byteLength(contents) < 100_000, 'SVG assets should stay below 100 KB.');
 }
 const snapshot = validateSnapshot(JSON.parse(await read('data/activity.json')));
 for (const name of ['index.html', 'game.js', 'style.css', 'engine.js']) await access(resolve(root, 'play', name));
+for (const name of ['index.html', 'app.js', 'style.css', 'model.mjs']) await access(resolve(root, 'explore', name));
+assert.match(readme, /https:\/\/vighriday\.github\.io\/vighriday\/explore\/\?lens=problem/);
+const explorerHtml = await read('explore/index.html');
+const explorerApp = await read('explore/app.js');
+const explorerCss = await read('explore/style.css');
+const explorerIds = [...explorerHtml.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+assert.equal(new Set(explorerIds).size, explorerIds.length, 'Explorer controls need unique identifiers.');
+for (const [, id] of explorerApp.matchAll(/\bget\('([^']+)'\)/g)) {
+  assert.ok(explorerIds.includes(id), `Explorer control is missing from HTML: ${id}`);
+}
+for (const [, asset] of explorerHtml.matchAll(/(?:href|src)="\.\/([^"]+)"/g)) {
+  await access(resolve(root, 'explore', asset));
+}
+assert.match(explorerCss, /prefers-reduced-motion:reduce/);
+assert.doesNotMatch(explorerCss, /animation[^;{}]*\binfinite\b/);
 const workflowFiles = (await readdir(resolve(root, '.github/workflows'))).filter(path => /\.ya?ml$/.test(path)).sort();
 assert.deepEqual(workflowFiles, ['refresh.yml', 'verify.yml']);
 for (const filename of workflowFiles) {
@@ -47,4 +66,4 @@ for (const filename of workflowFiles) {
     }
   }
 }
-console.log(`Profile verified: six self-contained SVGs, supported README markup, one game, 90 dated contribution records, two pinned workflows. Last successful snapshot: ${snapshot.fetchedAt}.`);
+console.log(`Profile verified: six self-contained SVGs, supported README markup, one explorer, one game, 90 dated contribution records, two pinned workflows. Last successful snapshot: ${snapshot.fetchedAt}.`);

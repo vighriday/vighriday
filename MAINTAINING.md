@@ -1,6 +1,6 @@
 # Maintaining this profile
 
-The profile has one visual system, one contribution snapshot, and one game. The README is intentionally short; the portfolio contains the full project stories.
+The profile has one visual system, one contribution snapshot, one project explorer, and one game. The README is intentionally short; the portfolio contains the full project stories.
 
 ## Local commands
 
@@ -18,6 +18,8 @@ npm run verify
 The header retains the original profile portrait as vector cells. Its 64-by-46 tonal map is in `src/portrait.json`; it does not fetch a photograph or depend on system block-character fonts. The three selected-work illustrations share a frame, while their diagrams reference evidence sheets, agent connections, and a football decision. Keep the project descriptions and links in native Markdown beneath the artwork.
 
 Font paths use the finite-coordinate exporter in `src/lettering.mjs`. The font library's decimal formatter can emit `NaN` for near-integer values and silently drop parts of letters. Regression tests cover the affected glyphs, and verification rejects invalid coordinates in every generated SVG.
+
+The header's three accent pixels introduce themselves for 3.3 seconds, and each project diagram draws its highlighted path once over 2.2 seconds. All lettering stays still. These self-contained CSS introductions settle without looping and are disabled by `prefers-reduced-motion`.
 
 ## What the chart measures
 
@@ -43,5 +45,7 @@ GitHub Pages serves `main` from `/` with `.nojekyll`. The game URL is `https://v
 ## Content and interaction
 
 Keep substantive text in Markdown, with short project explanations and links to evidence. Use native disclosures for background details. Avoid inline scripts/styles, remote badges, simulated health statuses, and duplicate activity visualizations. Update project descriptions and the portfolio together when their scope changes.
+
+`explore/` is a small explanatory interface, separate from the single game. Four project selectors and three lenses change the workflow labels and factual notes. Diagram nodes reveal details within the selected lens and animate the route emphasis once. The URL preserves the selected project, perspective, and node, supports browser history, and can be shared. It uses local assets and has no accounts, analytics, or remote inference. Initial Veris content remains readable without JavaScript. Native README disclosures contain additional design notes for readers who stay on GitHub.
 
 Primary rendering references: [GitHub Markup](https://github.com/github/markup), [collapsed sections](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-collapsed-sections), [SVG image restrictions](https://github.com/mdn/content/blob/main/files/en-us/web/svg/guides/svg_as_an_image/index.md), and [workflow triggers](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow).

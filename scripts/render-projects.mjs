@@ -37,7 +37,7 @@ function verisDiagram() {
       <path d="M672 72H746M672 85H725M672 111H756M672 124H733" stroke="${palette.paper}" opacity=".23"/>
       <path d="M672 98H751" stroke="${palette.red}"/>
       <path d="M672 94L751 102" stroke="${palette.red}" opacity=".45"/>
-      <path d="M774 85H864V98H893" stroke="${palette.acid}"/>
+      <path class="trace-intro" d="M774 85H864V98H893" stroke="${palette.acid}"/>
       <path d="M863 71V120" stroke="${palette.paper}" opacity=".15" stroke-dasharray="2 5"/>
     </g>
     <circle cx="774" cy="85" r="2.75" fill="${palette.acid}"/>
@@ -56,7 +56,7 @@ function hiveDiagram() {
       ${cells.map(([x, y]) => `<path d="${hexagon(x, y, 30)}" opacity="${x === 735 && y === 84 ? '.5' : '.14'}"/>`).join('')}
     </g>
     <path d="M690 110L735 84L780 110L825 84L870 58" fill="none" stroke="${palette.paper}" stroke-width="1.1" opacity=".38"/>
-    <path d="M735 84L825 32" fill="none" stroke="${palette.red}" stroke-width="1.6"/>
+    <path class="trace-intro" d="M735 84L825 32" fill="none" stroke="${palette.red}" stroke-width="1.6"/>
     <circle cx="735" cy="84" r="4" fill="${palette.acid}"/>
     <circle cx="690" cy="110" r="2.5" fill="${palette.paper}" opacity=".6"/>
     <circle cx="780" cy="110" r="2.5" fill="${palette.paper}" opacity=".6"/>
@@ -75,7 +75,7 @@ function offsideDiagram() {
       <path d="M632 72H639M632 72V96H639M899 72H906V96H899"/>
     </g>
     <circle cx="769" cy="84" r="1.6" fill="${palette.paper}" opacity=".45"/>
-    <path d="M661 115C710 114 734 67 814 65" fill="none" stroke="${palette.acid}" stroke-width="1.3"/>
+    <path class="trace-intro" d="M661 115C710 114 734 67 814 65" fill="none" stroke="${palette.acid}" stroke-width="1.3"/>
     <path d="M814 29V139" stroke="${palette.red}" stroke-width="1.25"/>
     <path d="M806 29H822M806 139H822" stroke="${palette.red}" stroke-width=".8" opacity=".6"/>
     <path d="M723 98L814 65L866 47" fill="none" stroke="${palette.paper}" stroke-width=".75" opacity=".45" stroke-dasharray="3 5"/>
@@ -111,9 +111,14 @@ for (const project of projects) {
     ${lettering(project.index, 40, 39, 16, palette.muted, .03)}
     ${lettering(project.name, 38, 131, project.size, palette.paper, -.04)}
     ${project.diagram()}`;
-  const image = svgDocument({ height, title: project.name, description: project.description, body });
+  const defs = `<style>
+    .trace-intro{stroke-dasharray:320;stroke-dashoffset:0;animation:trace-in 2.2s ease-out 1}
+    @keyframes trace-in{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+    @media(prefers-reduced-motion:reduce){.trace-intro{animation:none}}
+  </style>`;
+  const image = svgDocument({ height, title: project.name, description: project.description, defs, body });
   assert.ok(Buffer.byteLength(image) < 100_000, `Project banner must remain below 100 KB: ${project.id}`);
-  assert.ok(!/<(?:script|foreignObject|text|animate)\b/.test(image), 'Project banners must be self-contained, outlined, and static.');
+  assert.ok(!/<(?:script|foreignObject|text|animate)\b/.test(image), 'Project banners must remain self-contained and outlined, with only a brief CSS introduction.');
   assert.doesNotMatch(image, /NaN|Infinity|undefined/, 'Every project glyph must have valid coordinates.');
   const file = new URL(`../assets/project-${project.id}.svg`, import.meta.url);
   if (process.argv.includes('--check')) {
@@ -121,5 +126,5 @@ for (const project of projects) {
   } else {
     await writeFile(file, image);
   }
-  console.log(JSON.stringify({ asset: `assets/project-${project.id}.svg`, width, height, bytes: Buffer.byteLength(image), outlined: true, static: true }));
+  console.log(JSON.stringify({ asset: `assets/project-${project.id}.svg`, width, height, bytes: Buffer.byteLength(image), outlined: true, introSeconds: 2.2 }));
 }

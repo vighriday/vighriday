@@ -56,6 +56,11 @@ const followThrough = lettering('serif', 'follow-through.', 100, 274, 82, palett
 const portraitCaption = lettering('sans', 'A FEW PIXELS. A WHOLE PERSON.', 687, 287, 10, palette.muted, .035);
 
 const defs = `
+    <style>
+      .portrait-signal{animation:signal-intro 1.1s ease-in-out 3}
+      @keyframes signal-intro{0%,100%{opacity:1}45%{opacity:.25}}
+      @media(prefers-reduced-motion:reduce){.portrait-signal{animation:none}}
+    </style>
     <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="${palette.paper}" stroke-width=".7" opacity=".055"/></pattern>
     <linearGradient id="rule"><stop stop-color="${palette.paper}" stop-opacity=".18"/><stop offset="1" stop-color="${palette.paper}" stop-opacity=".04"/></linearGradient>`;
 
@@ -64,7 +69,7 @@ const body = `
   <path d="M40 24H920M40 312H920" stroke="url(#rule)" stroke-width=".7"/>
   <path d="M644 42V262" stroke="${palette.paper}" stroke-width=".6" opacity=".1"/>
   <path d="M678 54V30H702M895 30H919V54M919 240V264H895M702 264H678V240" fill="none" stroke="${palette.paper}" stroke-width=".7" opacity=".34"/>
-  <path d="M900 49h5v5h-5zM910 64h3v3h-3zM689 245h4v4h-4z" fill="${palette.acid}"/>
+  <path class="portrait-signal" d="M900 49h5v5h-5zM910 64h3v3h-3zM689 245h4v4h-4z" fill="${palette.acid}"/>
   ${pixelPortrait}
   ${name}
   ${idea}
@@ -87,7 +92,7 @@ const image = svgDocument({
   body,
 });
 assert.ok(Buffer.byteLength(image) < 100_000, 'The static header must remain below 100 KB.');
-assert.ok(!/<(?:script|foreignObject|text|animate)\b/.test(image), 'Header must remain self-contained, outlined, and static.');
+assert.ok(!/<(?:script|foreignObject|text|animate)\b/.test(image), 'Header must remain self-contained and outlined, with only its brief CSS introduction.');
 assert.doesNotMatch(image, /NaN|Infinity|undefined/, 'Every visible glyph must have valid coordinates.');
 
 if (process.argv.includes('--check')) {
@@ -96,4 +101,4 @@ if (process.argv.includes('--check')) {
   await mkdir(new URL('../assets/', import.meta.url), { recursive: true });
   await writeFile(file, image);
 }
-console.log(JSON.stringify({ asset: 'assets/header.svg', width, height, bytes: Buffer.byteLength(image), outlined: true, static: true, bounds }, null, 2));
+console.log(JSON.stringify({ asset: 'assets/header.svg', width, height, bytes: Buffer.byteLength(image), outlined: true, introSeconds: 3.3, bounds }, null, 2));

@@ -1,6 +1,6 @@
 <p>
   <a href="https://hridayvig.xyz/">
-    <img src="assets/header.svg?v=readable-type" alt="Hriday Vig. Ideas, with follow-through. His original portrait, rebuilt in paper-coloured pixels." width="960">
+    <img src="assets/header.svg?v=signal-intro" alt="Hriday Vig. Ideas, with follow-through. His original portrait, rebuilt in paper-coloured pixels." width="960">
   </a>
 </p>
 
@@ -10,7 +10,10 @@ I connect ideas, people, and technology to turn complex problems into useful pro
 
 ## 01 / Selected work
 
-<a href="https://github.com/vighriday/Veris"><img src="assets/project-veris.svg" alt="01.1 / Veris. An evidence-sheet study in paper, red, and acid green." width="960"></a>
+**Change the lens:** [The problem](https://vighriday.github.io/vighriday/explore/?lens=problem) · [The decisions](https://vighriday.github.io/vighriday/explore/?lens=decisions) · [The evidence](https://vighriday.github.io/vighriday/explore/?lens=evidence)<br>
+Tap a project illustration to explore its logic.
+
+<a href="https://vighriday.github.io/vighriday/explore/?project=veris"><img src="assets/project-veris.svg?v=lens" alt="01.1 / Veris. An evidence-sheet study in paper, red, and acid green. Open its interactive project view." width="960"></a>
 
 **Know what changed. Know what was checked.**
 
@@ -18,7 +21,16 @@ A local-first behavioral diff for TypeScript and JavaScript. Connects code chang
 
 [Source](https://github.com/vighriday/Veris) · [Published package](https://www.npmjs.com/package/veris-core) · [Case study](https://hridayvig.xyz/projects/veris)
 
-<a href="https://github.com/vighriday/hive-agent-security"><img src="assets/project-hive.svg" alt="01.2 / HIVE. A connected honeycomb with one highlighted path between agents." width="960"></a>
+<details>
+<summary>What counts as confidence after a code change?</summary>
+
+A changed line is only the beginning. Veris connects it to a likely affected surface, a verification plan, and a record of the evidence. The distinction matters: a plan is a next step, and a record shows what was actually checked.
+
+[Follow that thread ↗](https://vighriday.github.io/vighriday/explore/?project=veris&lens=decisions)
+
+</details>
+
+<a href="https://vighriday.github.io/vighriday/explore/?project=hive"><img src="assets/project-hive.svg?v=lens" alt="01.2 / HIVE. A connected honeycomb with one highlighted path between agents. Open its interactive project view." width="960"></a>
 
 **Security for what happens between agents.**
 
@@ -26,13 +38,31 @@ A graph-based prototype for unsafe capabilities that emerge between individually
 
 [Source](https://github.com/vighriday/hive-agent-security) · [Replay console](https://vighriday.github.io/hive-agent-security/console/) · [Case study](https://hridayvig.xyz/projects/hive)
 
-<a href="https://github.com/vighriday/offside-june-2026"><img src="assets/project-offside.svg" alt="01.3 / OFFSIDE. A football pitch intersected by an evidence line." width="960"></a>
+<details>
+<summary>Why look at the connections between agents?</summary>
+
+Individually permitted capabilities can combine into an unsafe path. HIVE examines those relationships and makes the containment trade-offs inspectable. The public console is a recorded prototype replay, with simulated controls.
+
+[Inspect the design ↗](https://vighriday.github.io/vighriday/explore/?project=hive&lens=decisions)
+
+</details>
+
+<a href="https://vighriday.github.io/vighriday/explore/?project=offside"><img src="assets/project-offside.svg?v=lens" alt="01.3 / OFFSIDE. A football pitch intersected by an evidence line. Open its interactive project view." width="960"></a>
 
 **Explain why the argument persists.**
 
 An evidence-grounded account of disputed football decisions. IBM Granite reads the sources, Granite Guardian audits that reading, and explicit rules assemble the diagnosis. The public reader presents precomputed analyses.
 
 [Source](https://github.com/vighriday/offside-june-2026) · [Evidence reader](https://offside-june-2026.vercel.app/) · [Case study](https://hridayvig.xyz/projects/offside)
+
+<details>
+<summary>Where does the model stop and the decision logic begin?</summary>
+
+OFFSIDE separates source reading, an audit of that reading, and explicit diagnosis rules. That makes the route to an explanation easier to inspect. The public reader shows precomputed analyses; the engine lives in the source repository.
+
+[Switch to the evidence view ↗](https://vighriday.github.io/vighriday/explore/?project=offside&lens=evidence)
+
+</details>
 
 <details>
 <summary><strong>Follow another thread</strong></summary>

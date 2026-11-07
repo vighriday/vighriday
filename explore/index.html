@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0c0d0b">
+  <meta name="description" content="Explore Hriday Vig's work through the problem, the decisions, and the evidence.">
+  <title>Different angles / Hriday Vig</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workbench">Skip to the work</a>
+  <div class="page">
+    <header class="site-header">
+      <a class="identity" href="https://github.com/vighriday" aria-label="Hriday Vig, GitHub profile"><span class="identity-mark" aria-hidden="true">◇</span><span>HRIDAY<br>VIG</span></a>
+      <span class="mono header-note">A SMALL FIELD GUIDE TO THE WORK</span>
+      <a class="back-link mono" href="https://github.com/vighriday">BACK TO THE PROFILE ↗</a>
+    </header>
+    <main>
+      <section class="introduction" aria-labelledby="page-title">
+        <div><p class="eyebrow mono">01 / AN INTERACTIVE INDEX</p><h1 id="page-title">Same work.<br><em>Different angles.</em></h1></div>
+        <p class="premise">Choose a project. <br>Change your point of view. <br>Follow the part that interests you.</p>
+      </section>
+      <noscript><p class="fallback">You are reading the Veris overview. Enable JavaScript for project and lens controls, or explore <a href="https://hridayvig.xyz/#work">the full project directory ↗</a>.</p></noscript>
+      <section class="workbench" id="workbench" aria-label="Project explorer">
+        <div class="project-selector">
+          <p class="mono section-label">PICK A THREAD <span>01—04</span></p>
+          <div class="project-tabs" role="tablist" aria-label="Projects" aria-orientation="vertical">
+            <button id="project-veris" class="project-tab" type="button" role="tab" data-project="veris" aria-selected="true" aria-controls="project-panel" tabindex="0" disabled><span class="mono">01</span><span>Veris<small>Developer infrastructure</small></span><span class="tab-arrow" aria-hidden="true">↗</span></button>
+            <button id="project-hive" class="project-tab" type="button" role="tab" data-project="hive" aria-selected="false" aria-controls="project-panel" tabindex="-1" disabled><span class="mono">02</span><span>HIVE<small>Agent security research</small></span><span class="tab-arrow" aria-hidden="true">↗</span></button>
+            <button id="project-offside" class="project-tab" type="button" role="tab" data-project="offside" aria-selected="false" aria-controls="project-panel" tabindex="-1" disabled><span class="mono">03</span><span>OFFSIDE<small>Evidence and decisions</small></span><span class="tab-arrow" aria-hidden="true">↗</span></button>
+            <button id="project-pulse" class="project-tab" type="button" role="tab" data-project="pulse" aria-selected="false" aria-controls="project-panel" tabindex="-1" disabled><span class="mono">04</span><span>Pulse<small>Tools for working with AI</small></span><span class="tab-arrow" aria-hidden="true">↗</span></button>
+          </div>
+          <p class="selector-note">Four builds.<br>More than one way in.</p>
+        </div>
+        <section id="project-panel" class="project-panel" role="tabpanel" aria-labelledby="project-veris" tabindex="0">
+          <div class="project-heading"><div><p class="mono" id="project-category">DEVELOPER INFRASTRUCTURE</p><h2 id="project-name">Veris<span aria-hidden="true">.</span></h2></div><span class="project-index mono" id="project-index">01 / 04</span></div>
+          <p class="project-description" id="project-description">A local-first behavioral diff for JavaScript and TypeScript.</p>
+          <div class="lens-bar"><span class="mono lens-caption">CHANGE THE LENS</span><div class="lens-tabs" role="tablist" aria-label="Project lens">
+            <button id="lens-problem" type="button" role="tab" data-lens="problem" aria-selected="true" aria-controls="lens-panel" tabindex="0" disabled>Problem</button>
+            <button id="lens-decisions" type="button" role="tab" data-lens="decisions" aria-selected="false" aria-controls="lens-panel" tabindex="-1" disabled>Decisions</button>
+            <button id="lens-evidence" type="button" role="tab" data-lens="evidence" aria-selected="false" aria-controls="lens-panel" tabindex="-1" disabled>Evidence</button>
+          </div></div>
+          <div class="lens-panel" id="lens-panel" role="tabpanel" aria-labelledby="lens-problem" tabindex="0">
+            <div class="diagram" role="group" aria-label="Explore three parts of this workflow">
+              <svg class="diagram-path" viewBox="0 0 900 130" preserveAspectRatio="none" aria-hidden="true"><path d="M150 66H750"/><path id="active-route" class="active-route" d="M150 66H750" stroke-dasharray="600" stroke-dashoffset="600"/><path class="branch" d="M450 66V112H750"/><circle cx="750" cy="112" r="4"/></svg>
+              <button class="diagram-node" id="node-0" type="button" data-node="0" aria-pressed="true" aria-controls="node-note" disabled><span class="node-number mono">01</span><span class="node-label">Change</span><span class="node-dot" aria-hidden="true"></span></button>
+              <button class="diagram-node" id="node-1" type="button" data-node="1" aria-pressed="false" aria-controls="node-note" disabled><span class="node-number mono">02</span><span class="node-label">Reach</span><span class="node-dot" aria-hidden="true"></span></button>
+              <button class="diagram-node" id="node-2" type="button" data-node="2" aria-pressed="false" aria-controls="node-note" disabled><span class="node-number mono">03</span><span class="node-label">Evidence</span><span class="node-dot" aria-hidden="true"></span></button>
+            </div>
+            <p class="mono diagram-caption">A WORKFLOW MAP <span>SELECT A NODE TO FOLLOW THE DETAIL</span></p>
+            <div class="reading"><div><h3 id="view-title">A diff shows the edit. What follows it?</h3><p id="view-copy">The interesting question is how a change travels, what deserves checking, and what evidence is available.</p></div><aside id="node-note" class="node-note" aria-labelledby="node-note-title"><p class="mono" id="node-note-title">01 / CHANGE</p><p id="node-note-copy">Start with the local code change rather than asking a model to guess the whole system.</p></aside></div>
+          </div>
+          <div class="project-bottom"><span class="mono project-fact" id="project-fact">17 MCP TOOLS + A CLI</span><nav id="project-links" aria-label="Veris links"><a href="https://github.com/vighriday/Veris">Source ↗</a><a href="https://www.npmjs.com/package/veris-core">Published package ↗</a><a href="https://hridayvig.xyz/projects/veris">Case study ↗</a></nav></div>
+        </section>
+      </section>
+      <div class="view-tools"><p class="mono">A DIFFERENT LENS CHANGES THE QUESTION.</p><button class="share-button mono" id="share-view" type="button" disabled>SHARE THIS VIEW <span aria-hidden="true">↗</span></button><span class="share-status" id="share-status" role="status"></span><div class="share-fallback" id="share-fallback" hidden><label for="share-url">Copy this view’s link</label><input id="share-url" type="url" readonly spellcheck="false"></div></div>
+      <p id="view-announcement" class="sr-only" role="status" aria-atomic="true"></p>
+    </main>
+    <footer class="page-footer mono"><span>CONTEXT BEFORE CONCLUSIONS.</span><a href="https://hridayvig.xyz/#work">THE FULL PROJECT DIRECTORY ↗</a></footer>
+  </div>
+</body>
+</html>

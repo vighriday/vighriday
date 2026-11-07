@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="164" viewBox="0 0 960 164" role="img" aria-labelledby="title description">
   <title id="title">Veris</title>
   <desc id="description">An original editorial banner for Veris. Three offset evidence sheets carry red changed lines, with an acid line connecting an observed change to its evidence.</desc>
-
+  <defs><style>
+    .trace-intro{stroke-dasharray:320;stroke-dashoffset:0;animation:trace-in 2.2s ease-out 1}
+    @keyframes trace-in{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+    @media(prefers-reduced-motion:reduce){.trace-intro{animation:none}}
+  </style></defs>
   <rect width="960" height="164" fill="#0c0d0b"/>
 
     <path d="M116 31H550M40 153H920M585 31V135" fill="none" stroke="#e8e7df" stroke-width=".7" opacity=".12"/>
@@ -17,7 +21,7 @@
       <path d="M672 72H746M672 85H725M672 111H756M672 124H733" stroke="#e8e7df" opacity=".23"/>
       <path d="M672 98H751" stroke="#ff4d35"/>
       <path d="M672 94L751 102" stroke="#ff4d35" opacity=".45"/>
-      <path d="M774 85H864V98H893" stroke="#c8ff4d"/>
+      <path class="trace-intro" d="M774 85H864V98H893" stroke="#c8ff4d"/>
       <path d="M863 71V120" stroke="#e8e7df" opacity=".15" stroke-dasharray="2 5"/>
     </g>
     <circle cx="774" cy="85" r="2.75" fill="#c8ff4d"/>
