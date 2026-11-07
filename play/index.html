@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c0d0b" />
+    <meta name="description" content="Signal Run: a small, original browser game by Hriday Vig. Move the receiver, return the signal, and clear the field." />
+    <title>Signal Run · Hriday Vig</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="game.js" type="module"></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="identity" href="https://github.com/vighriday"><span class="identity-mark" aria-hidden="true">+</span><span>HRIDAY<br />VIG</span></a>
+        <span class="mono">A SMALL EXPERIMENT / 01</span>
+        <a class="back-link mono" href="https://github.com/vighriday/vighriday">PROFILE ↗</a>
+      </header>
+
+      <main>
+        <div class="introduction">
+          <div><p class="eyebrow mono">A LITTLE LESS NOISE.</p><h1>Signal <em>Run.</em></h1></div>
+          <p class="premise">Move the receiver.<br />Return the signal.<br />Make room for clarity.</p>
+        </div>
+
+        <section class="game" aria-labelledby="game-heading">
+          <div class="game-bar">
+            <h2 id="game-heading" class="mono"><span class="status-dot" aria-hidden="true"></span>THE SIGNAL FIELD</h2>
+            <div class="readouts mono"><span>CLEARED <strong id="score">00 / 60</strong></span><span>ATTEMPTS <strong id="lives">03</strong></span></div>
+            <div class="game-actions"><button id="pause" type="button" disabled>Pause <kbd>P</kbd></button><button id="reset" type="button">Reset <kbd>R</kbd></button></div>
+          </div>
+
+          <div class="game-frame" id="game-frame">
+            <canvas id="board" width="960" height="480" tabindex="0" aria-label="Signal Run game field. Move the receiver using the arrow keys or A and D. Space starts or pauses the run." aria-describedby="instructions game-status">Your browser needs Canvas support to play Signal Run.</canvas>
+            <div class="game-overlay" id="overlay">
+              <div class="overlay-card">
+                <p class="mono" id="overlay-kicker">YOUR MOVE / NO AUTOPILOT</p>
+                <h3 id="overlay-title">Find your <em>signal.</em></h3>
+                <p id="overlay-description">Clear all 60 tiles. Keep the signal above the receiver. You have three attempts.</p>
+                <button class="start-button" id="start" type="button">Start run <span aria-hidden="true">↗</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-bottom">
+            <p id="game-status" role="status" aria-live="polite" aria-atomic="true">Ready when you are. Start the run to play.</p>
+            <div class="touch-controls" aria-label="Receiver controls"><button type="button" id="move-left" aria-label="Move receiver left">← <span>LEFT</span></button><button type="button" id="move-right" aria-label="Move receiver right"><span>RIGHT</span> →</button></div>
+          </div>
+        </section>
+
+        <div class="instructions" id="instructions">
+          <p class="mono">HOW TO PLAY</p>
+          <p><strong>Move:</strong> ← / → or A / D while the field is focused. Drag on the field, or hold the left and right buttons.</p>
+          <p><strong>Take a breath:</strong> Space or P pauses. R resets. Hit the signal off-centre to change its direction.</p>
+        </div>
+        <p class="game-note">An original arcade experiment. These tiles are a game board, not a contribution graph.</p>
+      </main>
+
+      <footer class="page-footer mono"><span>BUILT TO BE PLAYED.</span><span>© 2026 / HRIDAY VIG</span><a href="https://hridayvig.xyz/">THE REST OF THE WORK ↗</a></footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "hriday-profile",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/render-brand.mjs && node scripts/render-activity.mjs",
+    "refresh": "node scripts/refresh-data.mjs && node scripts/render-activity.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "devDependencies": {
+    "opentype.js": "2.0.0",
+    "yaml": "2.9.1"
+  }
+}

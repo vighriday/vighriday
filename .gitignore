@@ -18,3 +18,7 @@ preview/
 .playwright-mcp/
 _svgcheck.html
 _ghpreview.html
+
+node_modules/
+.qa/
+*.log
