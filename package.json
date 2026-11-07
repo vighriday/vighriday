@@ -5,7 +5,8 @@
   "type": "module",
   "engines": { "node": ">=22" },
   "scripts": {
-    "build": "node scripts/render-brand.mjs && node scripts/render-activity.mjs",
+    "build": "node scripts/render-brand.mjs && node scripts/render-projects.mjs && node scripts/render-activity.mjs",
+    "build:check": "node scripts/render-brand.mjs --check && node scripts/render-projects.mjs --check && node scripts/render-activity.mjs --check",
     "refresh": "node scripts/refresh-data.mjs && node scripts/render-activity.mjs",
     "test": "node --test tests/*.test.mjs",
     "verify": "node scripts/verify.mjs"

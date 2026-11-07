@@ -12,7 +12,9 @@ assert.ok(readme.trim().length > 500 && readme.trim().length < 9000, 'Keep the p
 assert.doesNotMatch(readme, /AI Product Manager|Shipping production systems since|streak-stats|shields\.io|komarev|skillicons|pac.?man|snake|wakatime|3d-contrib/i);
 assert.doesNotMatch(readme, /<(?:script|iframe|style|canvas|input)\b/i, 'Unsupported README interaction.');
 const images = [...readme.matchAll(/<img\b([^>]*)>/g)];
-assert.equal(images.length, 3, 'One header, one activity chart, and one game poster.');
+const expectedImages = ['assets/header.svg', 'assets/project-veris.svg', 'assets/project-hive.svg', 'assets/project-offside.svg', 'assets/activity.svg', 'assets/game-preview.svg'];
+assert.equal(images.length, expectedImages.length, 'One portrait header, three project studies, one activity chart, and one game poster.');
+assert.deepEqual(images.map(([, attributes]) => attributes.match(/\bsrc="([^"]+)"/)?.[1]), expectedImages, 'Keep each illustration purposeful and in reading order.');
 for (const [, attributes] of images) {
   const source = attributes.match(/\bsrc="([^"]+)"/)?.[1];
   assert.ok(source && !/^https?:|^\/\//i.test(source), 'Image dependencies must be repository assets.');
@@ -20,12 +22,12 @@ for (const [, attributes] of images) {
   assert.ok(/\bwidth="960"/.test(attributes));
   await access(resolve(root, source));
 }
-for (const image of ['assets/header.svg', 'assets/activity.svg', 'assets/game-preview.svg']) {
+for (const image of expectedImages) {
   const contents = await read(image);
   const viewBox = contents.match(/viewBox="0 0 (\d+) (\d+)"/);
   assert.ok(/<svg\b/.test(contents) && viewBox && Number(viewBox[1]) >= 800 && Number(viewBox[2]) <= 400);
   assert.doesNotMatch(contents, /<(?:script|foreignObject|animate|animateTransform)\b|@import|onload=|javascript:|url\(\s*https?:|(?:href|src)="https?:/i);
-  assert.ok(Buffer.byteLength(contents) < 100_000, 'SVG assets should stay below100 KB.');
+  assert.ok(Buffer.byteLength(contents) < 100_000, 'SVG assets should stay below 100 KB.');
 }
 const snapshot = validateSnapshot(JSON.parse(await read('data/activity.json')));
 for (const name of ['index.html', 'game.js', 'style.css', 'engine.js']) await access(resolve(root, 'play', name));
@@ -44,4 +46,4 @@ for (const filename of workflowFiles) {
     }
   }
 }
-console.log(`Profile verified: three self-contained SVGs, supported README markup, one game, 90 dated contribution records, two pinned workflows. Last successful snapshot: ${snapshot.fetchedAt}.`);
+console.log(`Profile verified: six self-contained SVGs, supported README markup, one game, 90 dated contribution records, two pinned workflows. Last successful snapshot: ${snapshot.fetchedAt}.`);

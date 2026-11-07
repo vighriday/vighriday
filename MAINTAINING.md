@@ -9,10 +9,13 @@ Use Node.js 22 and `npm ci --ignore-scripts`.
 ```sh
 npm test
 npm run build
+npm run build:check
 npm run verify
 ```
 
-`npm run build` is offline and reproduces the SVGs from committed fonts and data. `npm run refresh` fetches current public contribution data and rebuilds only the activity chart. The header uses outlined Manrope and Newsreader from the website. Font sources and licenses are in `fonts/`.
+`npm run build` is offline and reproduces the SVGs from committed fonts and data. `npm run build:check` checks their reproducibility. `npm run refresh` fetches current public contribution data and rebuilds only the activity chart. The header and project illustrations use outlined Manrope and Newsreader from the website. Font sources and licenses are in `fonts/`.
+
+The header retains the original profile portrait as vector cells. Its 64-by-46 tonal map is in `src/portrait.json`; it does not fetch a photograph or depend on system block-character fonts. The three selected-work illustrations share a frame, while their diagrams reference evidence sheets, agent connections, and a football decision. Keep the project descriptions and links in native Markdown beneath the artwork.
 
 ## What the chart measures
 

@@ -14,6 +14,10 @@ for (const [name, url] of Object.entries(fontFiles)) {
   const bytes = await readFile(url);
   fonts[name] = opentype.parse(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength));
 }
+const portrait = JSON.parse(await readFile(new URL('../src/portrait.json', import.meta.url), 'utf8'));
+assert.equal(portrait.columns, 64);
+assert.equal(portrait.rows.length, 46);
+assert.ok(portrait.rows.every(row => row.length === portrait.columns && [...row].every(character => portrait.levels.includes(character))), 'The original pixel portrait must remain complete.');
 
 const bounds = [];
 function lettering(font, text, x, y, size, fill, letterSpacing = 0) {
@@ -27,15 +31,19 @@ function lettering(font, text, x, y, size, fill, letterSpacing = 0) {
     .join('');
 }
 
-function arc(cx, cy, rx, ry, rotation, start, end) {
-  const rotate = rotation * Math.PI / 180;
-  return Array.from({ length: 65 }, (_, index) => {
-    const angle = (start + (end - start) * index / 64) * Math.PI / 180;
-    const x = rx * Math.cos(angle);
-    const y = ry * Math.sin(angle);
-    return `${index ? 'L' : 'M'}${(cx + x * Math.cos(rotate) - y * Math.sin(rotate)).toFixed(2)} ${(cy + x * Math.sin(rotate) + y * Math.cos(rotate)).toFixed(2)}`;
-  }).join(' ');
-}
+// Keep the original portrait's tonal cells as vector geometry. No remote photo,
+// font-dependent block glyphs, raster payload, or animation is required.
+const pixels = Array.from({ length: portrait.levels.length }, () => []);
+portrait.rows.forEach((row, rowIndex) => {
+  [...row].forEach((character, column) => {
+    const level = portrait.levels.indexOf(character);
+    if (!level) return;
+    const x = 699 + column * 3;
+    const y = 38 + rowIndex * 4.8;
+    pixels[level].push(`M${x.toFixed(1)} ${y.toFixed(1)}h2.4v4.1h-2.4z`);
+  });
+});
+const pixelPortrait = pixels.map((path, level) => path.length ? `<path fill="${palette.paper}" opacity="${[0, .19, .43, .72, 1][level]}" d="${path.join('')}"/>` : '').join('');
 
 const nameSize = 82;
 const nameOptions = { kerning: true, letterSpacing: -.055 };
@@ -44,37 +52,34 @@ const name = lettering('sans', 'Hriday ', 38, 106, nameSize, palette.paper, -.05
   + lettering('sans', 'Vig.', surnameX, 106, nameSize, palette.acid, -.055);
 const idea = lettering('sans', 'Ideas, with', 40, 177, 50, palette.paper, -.045);
 const followThrough = lettering('serif', 'follow-through.', 119, 252, 82, palette.red, -.027);
+const portraitCaption = lettering('sans', 'A FEW PIXELS. A WHOLE PERSON.', 687, 287, 10, palette.muted, .035);
 
 const defs = `
     <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="${palette.paper}" stroke-width=".7" opacity=".055"/></pattern>
-    <linearGradient id="trajectory"><stop stop-color="${palette.paper}" stop-opacity="0"/><stop offset=".45" stop-color="${palette.paper}" stop-opacity=".16"/><stop offset="1" stop-color="${palette.acid}" stop-opacity=".75"/></linearGradient>
     <linearGradient id="rule"><stop stop-color="${palette.paper}" stop-opacity=".18"/><stop offset="1" stop-color="${palette.paper}" stop-opacity=".04"/></linearGradient>`;
 
 const body = `
   <rect width="${width}" height="${height}" fill="url(#grid)"/>
   <path d="M40 24H920M40 280H920" stroke="url(#rule)" stroke-width=".7"/>
-  <g fill="none" stroke-width=".85">
-    <path d="${arc(795, 154, 123, 53, -24, -191, 132)}" stroke="${palette.paper}" opacity=".27"/>
-    <path d="${arc(799, 147, 87, 100, 31, -140, 161)}" stroke="${palette.paper}" opacity=".15"/>
-    <path d="M624 217C669 228 707 204 755 172S848 81 899 98" stroke="url(#trajectory)"/>
-    <path d="M899 84V90M899 106V112M885 98H891M907 98H913" stroke="${palette.acid}" stroke-width=".65" opacity=".28"/>
-    <path d="M677 52V250" stroke="${palette.paper}" stroke-width=".6" opacity=".07"/>
-  </g>
-  <circle cx="899" cy="98" r="3.2" fill="${palette.acid}"/>
-  <circle cx="899" cy="98" r="10" fill="none" stroke="${palette.acid}" stroke-width=".7" opacity=".18"/>
+  <path d="M644 42V262" stroke="${palette.paper}" stroke-width=".6" opacity=".1"/>
+  <path d="M678 54V30H702M895 30H919V54M919 240V264H895M702 264H678V240" fill="none" stroke="${palette.paper}" stroke-width=".7" opacity=".34"/>
+  <path d="M900 49h5v5h-5zM910 64h3v3h-3zM689 245h4v4h-4z" fill="${palette.acid}"/>
+  ${pixelPortrait}
   ${name}
   ${idea}
-  ${followThrough}`;
+  ${followThrough}
+  ${portraitCaption}`;
 
-for (const box of bounds) {
+for (const box of bounds.slice(0, 4)) {
   assert.ok(box.x1 >= 32 && box.x2 <= 654, `Lettering outside horizontal safe area: ${box.text}`);
   assert.ok(box.y1 >= 36 && box.y2 <= 272, `Lettering outside vertical safe area: ${box.text}`);
 }
+assert.ok(bounds[4].x2 <= 920 && bounds[4].y2 <= 290, 'Portrait caption must stay within its frame.');
 
 const image = svgDocument({
   height,
   title: 'Hriday Vig. Ideas, with follow-through.',
-  description: 'A static editorial profile header. Thin paper and acid Manrope lettering meets red italic Newsreader on a charcoal grid, alongside open orbital paths. All visible lettering is outlined and needs no external fonts.',
+  description: 'Hriday Vig beside his original pixel portrait, rebuilt as tonal vector cells with registration marks on a charcoal grid. Paper and acid Manrope lettering meets red italic Newsreader. All visible lettering is outlined and needs no external fonts.',
   defs,
   body,
 });

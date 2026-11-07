@@ -30,6 +30,4 @@ jobs:
       - run: npm test
       - run: npm run verify
       - name: Check generated artwork
-        run: |
-          node scripts/render-brand.mjs --check
-          node scripts/render-activity.mjs --check
+        run: npm run build:check

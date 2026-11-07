@@ -1,6 +1,6 @@
 <p>
   <a href="https://hridayvig.xyz/">
-    <img src="assets/header.svg" alt="Hriday Vig. Ideas, with follow-through." width="960">
+    <img src="assets/header.svg" alt="Hriday Vig. Ideas, with follow-through. His original portrait, rebuilt in paper-coloured pixels." width="960">
   </a>
 </p>
 
@@ -10,21 +10,24 @@ I connect ideas, people, and technology to turn complex problems into useful pro
 
 ## 01 / Selected work
 
-### [Veris](https://github.com/vighriday/Veris)
+<a href="https://github.com/vighriday/Veris"><img src="assets/project-veris.svg" alt="01.1 / Veris. An evidence-sheet study in paper, red, and acid green." width="960"></a>
+
 **Know what changed. Know what was checked.**
 
 A local-first behavioral diff for TypeScript and JavaScript. Connects code changes with their likely reach, verification plans, and recorded evidence through 17 MCP tools and a CLI.
 
 [Source](https://github.com/vighriday/Veris) · [Published package](https://www.npmjs.com/package/veris-core) · [Case study](https://hridayvig.xyz/projects/veris)
 
-### [HIVE](https://github.com/vighriday/hive-agent-security)
+<a href="https://github.com/vighriday/hive-agent-security"><img src="assets/project-hive.svg" alt="01.2 / HIVE. A connected honeycomb with one highlighted path between agents." width="960"></a>
+
 **Security for what happens between agents.**
 
 A graph-based prototype for unsafe capabilities that emerge between individually authorised agents. Trace the finding, compare simulated containment options, and inspect the verification in a recorded engine replay.
 
 [Source](https://github.com/vighriday/hive-agent-security) · [Replay console](https://vighriday.github.io/hive-agent-security/console/) · [Case study](https://hridayvig.xyz/projects/hive)
 
-### [OFFSIDE](https://github.com/vighriday/offside-june-2026)
+<a href="https://github.com/vighriday/offside-june-2026"><img src="assets/project-offside.svg" alt="01.3 / OFFSIDE. A football pitch intersected by an evidence line." width="960"></a>
+
 **Explain why the argument persists.**
 
 An evidence-grounded account of disputed football decisions. IBM Granite reads the sources, Granite Guardian audits that reading, and explicit rules assemble the diagnosis. The public reader presents precomputed analyses.
@@ -42,8 +45,7 @@ An evidence-grounded account of disputed football decisions. IBM Granite reads t
 
 ## 02 / Experience, in context
 
-<details>
-<summary><strong>Work, education, and the tools behind it</strong></summary>
+Curious by nature. *Intentional by choice.*
 
 **NIIT Learning Systems Ltd. · Project Intern · July–August 2026**<br>
 Led OCR integration across requirements, architecture, workflow and field mapping, coordination, and testing toward production readiness. Contributed to an internal Network Intelligence Platform and performed AI chatbot UAT.
@@ -54,15 +56,18 @@ Led cloud platform modernization and worked across deployment, infrastructure, l
 **Proofr · Startup Catalyst · July 2025**<br>
 Market research, TAM/SAM/SOM analysis, and competitive assessments for India’s early-career hiring ecosystem.
 
+<details>
+<summary><strong>Foundation, community, and working toolkit</strong></summary>
+
 **B.Tech, Computer Science and Engineering · MSIT, GGSIPU · 2024–2028**<br>
 CGPA: **8.86/10**. Currently Sponsorship Department Head at **L.O.O.M**, a student community built around learning, building, mentoring, and contributing.
 
 **Working toolkit**<br>
 Python, Java, TypeScript/JavaScript, SQL, PostgreSQL, SQLite, MongoDB. AI-assisted work with Codex, Claude Code, and Cursor. Delivery with Azure Functions, Docker, Vercel, Neon, GitHub Actions, Dify, and n8n.
 
-[Read the full timeline ↗](https://hridayvig.xyz/#timeline)
-
 </details>
+
+[Read the full timeline ↗](https://hridayvig.xyz/#timeline)
 
 ## 03 / Activity, in context
 
