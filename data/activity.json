@@ -1,18 +1,14 @@
 {
   "schemaVersion": 1,
   "username": "vighriday",
-  "fetchedAt": "2026-11-19T14:39:48.016Z",
+  "fetchedAt": "2026-11-20T14:19:36.964Z",
   "window": {
-    "from": "2026-08-21",
-    "to": "2026-11-18",
+    "from": "2026-08-22",
+    "to": "2026-11-19",
     "timezone": "UTC",
     "completedDays": 90
   },
   "days": [
-    {
-      "date": "2026-08-21",
-      "count": 1
-    },
     {
       "date": "2026-08-22",
       "count": 1
@@ -368,10 +364,14 @@
     {
       "date": "2026-11-18",
       "count": 0
+    },
+    {
+      "date": "2026-11-19",
+      "count": 0
     }
   ],
-  "total": 939,
-  "activeDays": 85,
+  "total": 938,
+  "activeDays": 84,
   "peakDaily": 237,
   "source": {
     "kind": "github-public-contribution-calendar",
