@@ -1,18 +1,14 @@
 {
   "schemaVersion": 1,
   "username": "vighriday",
-  "fetchedAt": "2026-11-21T13:40:51.811Z",
+  "fetchedAt": "2026-11-22T13:34:36.276Z",
   "window": {
-    "from": "2026-08-23",
-    "to": "2026-11-20",
+    "from": "2026-08-24",
+    "to": "2026-11-21",
     "timezone": "UTC",
     "completedDays": 90
   },
   "days": [
-    {
-      "date": "2026-08-23",
-      "count": 16
-    },
     {
       "date": "2026-08-24",
       "count": 2
@@ -368,9 +364,13 @@
     {
       "date": "2026-11-20",
       "count": 40
+    },
+    {
+      "date": "2026-11-21",
+      "count": 4
     }
   ],
-  "total": 977,
+  "total": 965,
   "activeDays": 84,
   "peakDaily": 237,
   "source": {
